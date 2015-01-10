@@ -1,0 +1,47 @@
+# Ignore docs files #
+########################
+_gh_pages
+_site
+.ruby-version
+
+# Numerous always-ignore extensions #
+########################
+*.diff
+*.err
+*.orig
+*.log
+*.rej
+*.swo
+*.swp
+*.zip
+*.vi
+*~
+
+# OS or Editor folders #
+########################
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+.cache
+.project
+.settings
+.Spotlight-V100
+.Trashes
+.tmproj
+*.esproj
+nbproject
+*.sublime-project
+*.sublime-workspace
+.idea
+*.sass-cache
+*.ruby-version
+
+# Folders to ignore #
+########################
+node_modules
+reports
+
+# Sublime FTP config #
+######################
+# sftp-config.json
