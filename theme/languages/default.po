@@ -1,0 +1,369 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WP Frame\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-12-15 16:25+0100\n"
+"PO-Revision-Date: 2014-12-15 16:25+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;"
+"_n_noop:1,2;_c;_nc:4c,1,2;_x:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;_ex:1,2c;"
+"esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Poedit 1.7.1\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: ..\n"
+
+#: ../config/application.php:78
+msgid ""
+"You are using a <a href=\"#\">Theme</a> designed by <a href=\"#\">Someone</a>"
+msgstr ""
+
+#: ../config/menus.php:16
+msgid "Main navigation"
+msgstr ""
+
+#: ../config/sidebars.php:16
+msgid "First sidebar"
+msgstr ""
+
+#: ../config/sidebars.php:17
+msgid "Area of first sidebar"
+msgstr ""
+
+#: ../helpers.php:442
+msgid "Previous page"
+msgstr ""
+
+#: ../helpers.php:457
+msgid "Next page"
+msgstr ""
+
+#: ../hooks/_default_gravatar.php:7
+msgid "Custom Gravatar"
+msgstr ""
+
+#: ../hooks/_disable_feed.php:5
+msgid "No feed available,please visit our <a href=\""
+msgstr ""
+
+#: ../hooks/better_title.php:25
+#, php-format
+msgid "Page %s"
+msgstr ""
+
+#: ../hooks/thumbnails_in_posts_list.php:6
+msgid "Thumbnail"
+msgstr ""
+
+#: ../hooks/thumbnails_in_posts_list.php:28
+msgid "None"
+msgstr ""
+
+#: ../library/comments.php:26
+#, php-format
+msgid "<cite class=\"fn\">%s</cite> <span class=\"says\">says:</span>"
+msgstr ""
+
+#: ../library/comments.php:29
+msgid "Your comment is awaiting moderation."
+msgstr ""
+
+#: ../library/comments.php:35
+#, php-format
+msgid "%1$s at %2$s"
+msgstr ""
+
+#: ../library/comments.php:35
+msgid "(Edit)"
+msgstr ""
+
+#: ../library/plugin-activation.php:161
+msgid "Install Required Plugins"
+msgstr ""
+
+#: ../library/plugin-activation.php:162
+msgid "Install Plugins"
+msgstr ""
+
+#: ../library/plugin-activation.php:163
+#, php-format
+msgid "Installing Plugin: %s"
+msgstr ""
+
+#: ../library/plugin-activation.php:164
+msgid "Something went wrong."
+msgstr ""
+
+#: ../library/plugin-activation.php:165
+#, php-format
+msgid "This theme requires the following plugin: %1$s."
+msgid_plural "This theme requires the following plugins: %1$s."
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../library/plugin-activation.php:166
+#, php-format
+msgid "This theme recommends the following plugin: %1$s."
+msgid_plural "This theme recommends the following plugins: %1$s."
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../library/plugin-activation.php:167
+#, php-format
+msgid ""
+"Sorry, but you do not have the correct permissions to install the %s plugin. "
+"Contact the administrator of this site for help on getting the plugin "
+"installed."
+msgid_plural ""
+"Sorry, but you do not have the correct permissions to install the %s "
+"plugins. Contact the administrator of this site for help on getting the "
+"plugins installed."
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../library/plugin-activation.php:168
+#, php-format
+msgid "The following required plugin is currently inactive: %1$s."
+msgid_plural "The following required plugins are currently inactive: %1$s."
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../library/plugin-activation.php:169
+#, php-format
+msgid "The following recommended plugin is currently inactive: %1$s."
+msgid_plural "The following recommended plugins are currently inactive: %1$s."
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../library/plugin-activation.php:170
+#, php-format
+msgid ""
+"Sorry, but you do not have the correct permissions to activate the %s "
+"plugin. Contact the administrator of this site for help on getting the "
+"plugin activated."
+msgid_plural ""
+"Sorry, but you do not have the correct permissions to activate the %s "
+"plugins. Contact the administrator of this site for help on getting the "
+"plugins activated."
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../library/plugin-activation.php:171
+#, php-format
+msgid ""
+"The following plugin needs to be updated to its latest version to ensure "
+"maximum compatibility with this theme: %1$s."
+msgid_plural ""
+"The following plugins need to be updated to their latest version to ensure "
+"maximum compatibility with this theme: %1$s."
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../library/plugin-activation.php:172
+#, php-format
+msgid ""
+"Sorry, but you do not have the correct permissions to update the %s plugin. "
+"Contact the administrator of this site for help on getting the plugin "
+"updated."
+msgid_plural ""
+"Sorry, but you do not have the correct permissions to update the %s plugins. "
+"Contact the administrator of this site for help on getting the plugins "
+"updated."
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../library/plugin-activation.php:173
+msgid "Begin installing plugin"
+msgid_plural "Begin installing plugins"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../library/plugin-activation.php:174
+msgid "Begin activating plugin"
+msgid_plural "Begin activating plugins"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../library/plugin-activation.php:175
+msgid "Return to Required Plugins Installer"
+msgstr ""
+
+#: ../library/plugin-activation.php:176
+msgid "Return to the dashboard"
+msgstr ""
+
+#: ../library/plugin-activation.php:177 ../library/plugin-activation.php:1945
+msgid "Plugin activated successfully."
+msgstr ""
+
+#: ../library/plugin-activation.php:178 ../library/plugin-activation.php:1636
+msgid "The following plugin was activated successfully:"
+msgid_plural "The following plugins were activated successfully:"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../library/plugin-activation.php:179
+#, php-format
+msgid "All plugins installed and activated successfully. %1$s"
+msgstr ""
+
+#: ../library/plugin-activation.php:180
+msgid "Dismiss this notice"
+msgstr ""
+
+#: ../library/plugin-activation.php:534 ../library/plugin-activation.php:2162
+msgid "Return to the Dashboard"
+msgstr ""
+
+#: ../library/plugin-activation.php:1169
+msgid "Private Repository"
+msgstr ""
+
+#: ../library/plugin-activation.php:1172
+msgid "Pre-Packaged"
+msgstr ""
+
+#: ../library/plugin-activation.php:1177
+msgid "WordPress Repository"
+msgstr ""
+
+#: ../library/plugin-activation.php:1180
+msgid "Required"
+msgstr ""
+
+#: ../library/plugin-activation.php:1180
+msgid "Recommended"
+msgstr ""
+
+#: ../library/plugin-activation.php:1183
+msgid "Not Installed"
+msgstr ""
+
+#: ../library/plugin-activation.php:1185
+msgid "Installed But Not Activated"
+msgstr ""
+
+#: ../library/plugin-activation.php:1290 ../library/plugin-activation.php:1398
+msgid "Install"
+msgstr ""
+
+#: ../library/plugin-activation.php:1312 ../library/plugin-activation.php:1399
+msgid "Activate"
+msgstr ""
+
+#: ../library/plugin-activation.php:1361
+#, php-format
+msgid ""
+"No plugins to install or activate. <a href=\"%1$s\" title=\"Return to the "
+"Dashboard\">Return to the Dashboard</a>"
+msgstr ""
+
+#: ../library/plugin-activation.php:1377
+msgid "Plugin"
+msgstr ""
+
+#: ../library/plugin-activation.php:1378
+msgid "Source"
+msgstr ""
+
+#: ../library/plugin-activation.php:1379
+msgid "Type"
+msgstr ""
+
+#: ../library/plugin-activation.php:1380
+msgid "Status"
+msgstr ""
+
+#: ../library/plugin-activation.php:1928
+msgid "Install package not available."
+msgstr ""
+
+#: ../library/plugin-activation.php:1929
+#, php-format
+msgid "Downloading install package from <span class=\"code\">%s</span>&#8230;"
+msgstr ""
+
+#: ../library/plugin-activation.php:1930
+msgid "Unpacking the package&#8230;"
+msgstr ""
+
+#: ../library/plugin-activation.php:1931
+msgid "Installing the plugin&#8230;"
+msgstr ""
+
+#: ../library/plugin-activation.php:1932
+msgid "Plugin install failed."
+msgstr ""
+
+#: ../library/plugin-activation.php:1933
+msgid "Plugin installed successfully."
+msgstr ""
+
+#: ../library/plugin-activation.php:1944
+msgid "Plugin activation failed."
+msgstr ""
+
+#: ../library/plugin-activation.php:2058
+msgid ""
+"The installation and activation process is starting. This process may take a "
+"while on some hosts, so please be patient."
+msgstr ""
+
+#: ../library/plugin-activation.php:2059
+#, php-format
+msgid "%1$s installed and activated successfully."
+msgstr ""
+
+#: ../library/plugin-activation.php:2059 ../library/plugin-activation.php:2068
+msgid "Show Details"
+msgstr ""
+
+#: ../library/plugin-activation.php:2059 ../library/plugin-activation.php:2068
+msgid "Hide Details"
+msgstr ""
+
+#: ../library/plugin-activation.php:2060
+msgid "All installations and activations have been completed."
+msgstr ""
+
+#: ../library/plugin-activation.php:2061
+#, php-format
+msgid "Installing and Activating Plugin %1$s (%2$d/%3$d)"
+msgstr ""
+
+#: ../library/plugin-activation.php:2065
+msgid ""
+"The installation process is starting. This process may take a while on some "
+"hosts, so please be patient."
+msgstr ""
+
+#: ../library/plugin-activation.php:2066
+#, php-format
+msgid "An error occurred while installing %1$s: <strong>%2$s</strong>."
+msgstr ""
+
+#: ../library/plugin-activation.php:2067
+#, php-format
+msgid "The installation of %1$s failed."
+msgstr ""
+
+#: ../library/plugin-activation.php:2068
+#, php-format
+msgid "%1$s installed successfully."
+msgstr ""
+
+#: ../library/plugin-activation.php:2069
+msgid "All installations have been completed."
+msgstr ""
+
+#: ../library/plugin-activation.php:2070
+#, php-format
+msgid "Installing Plugin %1$s (%2$d/%3$d)"
+msgstr ""

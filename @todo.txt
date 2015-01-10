@@ -1,0 +1,38 @@
+
+
+Useful links:
+- http://jayj.dk/using-grunt-automate-theme-releases
+- https://github.com/justintadlock/hybrid-core
+- https://github.com/use-init/init
+- https://github.com/FlagshipWP/compass
+
+Reorganize files/folder... maybe move helpers and init to 'library' to clean up the theme root
+
+Add 'admin' config file and move some items from 'application'
+
+Add 'environments' to the config files to load different files depending on the environment (especially useful for assets dev/live)
+
+Add 'social sharing' links helper (from pins), also launch them in a popup (magnific popup)
+
+Add gruntfile and prepare for SASS (check skyline.is and inuit)
+
+Add 'theme activation' page from roots (https://github.com/roots/roots/tree/master/lib)
+
+Add automatic styleguide generator
+
+Add automatic documentation generator
+
+Add example widget to 'widgets'
+
+Implement – somehow – the rewrite rules from pins
+
+Fix admin_bar_logo
+
+Separate 'helpers' into api and helpers (?)
+
+Add some plugins for development (duplicate post, regenerate thumbnails, cache, auto optimize, debug bar...)
+Maybe move the 'plugins' folder inside 'library'
+
+Add login background image option (or hook)
+
+Move hooks.images_quality to config.media
