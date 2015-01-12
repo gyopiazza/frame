@@ -3,7 +3,7 @@
 /**
  * Framework starting point
  *
- * @package tema
+ * @package frame
  */
 
 // Load the debug functions file
@@ -14,6 +14,14 @@ require_once(locate_template('library/helpers.php'));
 
 // Load the plugins activation class
 require_once(locate_template('library/plugin-activation.php'));
+
+
+//--------------------------------------------------------------------------------------------
+// Automatically load files
+//--------------------------------------------------------------------------------------------
+
+// Scan for hooks and import them
+$hooks = frame_load_files('hooks', true);
 
 
 //--------------------------------------------------------------------------------------------
@@ -97,27 +105,9 @@ function frame_theme_setup()
     $deactivation = frame_config('application.deactivation');
     if (!empty($deactivation) && function_exists($deactivation))
         add_action('switch_theme', $deactivation);
-
-
-    //----------------------------------------------------------------------------------------
-    // Files editor (Appearance > Editor)
-    //----------------------------------------------------------------------------------------
-    
-    if (frame_config('application.files_editor') === false)
-        define('DISALLOW_FILE_EDIT', true);
-
 }
 
 add_action('after_setup_theme', 'frame_theme_setup');
-
-
-
-//--------------------------------------------------------------------------------------------
-// Automatically load files
-//--------------------------------------------------------------------------------------------
-
-// Scan for hooks and import them
-$hooks = frame_load_files('hooks', true);
 
 
 //--------------------------------------------------------------------------------------------
@@ -266,15 +256,13 @@ add_action('admin_init', 'frame_no_admin_access', 100);
 
 function frame_mce_buttons_2($buttons)
 {
-    if (!empty(frame_config('editor.style_formats')))
-        array_unshift($buttons, 'styleselect');
-
     $remove_buttons = frame_config('editor.remove_buttons');
 
     if (!empty($remove_buttons))
-        foreach ($remove_buttons as $remove)
-            if (($key = array_search($remove, $buttons)) !== false)
-                unset($buttons[$key]);
+        $buttons = array_diff($buttons, $remove_buttons);
+
+    if (!empty(frame_config('editor.style_formats')))
+        array_unshift($buttons, 'styleselect');
 
     return $buttons;
 }
@@ -411,6 +399,18 @@ function frame_register_required_plugins()
 add_action('tgmpa_register', 'frame_register_required_plugins');
 
 
+//----------------------------------------------------------------------------------------
+// Files editor (Appearance > Editor)
+//----------------------------------------------------------------------------------------
+
+if (!defined('DISALLOW_FILE_EDIT') && frame_config('application.files_editor') === false)
+    define('DISALLOW_FILE_EDIT', true);
 
 
+//----------------------------------------------------------------------------------------
+// Post Revisions
+//----------------------------------------------------------------------------------------
+
+if (!defined('WP_POST_REVISIONS'))
+    define('WP_POST_REVISIONS', frame_config('application.post_revisions'));
 

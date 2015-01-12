@@ -29,7 +29,7 @@ module.exports = function(grunt) {
         // auto grunt.initConfig
         init: true,
 
-        // data passed into config.  Can use with <%= test %>
+        // data passed into config. Can use with <%= config.element %>
         data: {
             config: config
         },
