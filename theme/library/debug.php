@@ -10,10 +10,10 @@
 global $frame_debug_stack;
 $frame_debug_stack = array();
 
-// Short function d() for t_debug()
-if (!function_exists('d')) { function d($var, $label = '', $verbose = false, $stack = false) { t_debug($var, $label, $verbose, $stack); } }
+// Short function d() for frame_debug()
+if (!function_exists('d')) { function d($var, $label = '', $verbose = false, $stack = false) { frame_debug($var, $label, $verbose, $stack); } }
 
-function t_debug($var, $label = '', $verbose = false, $stack = false)
+function frame_debug($var, $label = '', $verbose = false, $stack = false)
 {
 	// Stop execution if not in debug mode
 	// if (defined('WP_DEBUG') && WP_DEBUG === false) return;
@@ -46,8 +46,6 @@ function t_debug($var, $label = '', $verbose = false, $stack = false)
 
 	$debug .= '</small>';
 	$debug .= '</div><br><br><br>';
-
-	
 
 	$frame_debug_stack[] = $debug;
 }
@@ -84,7 +82,7 @@ function frame_caller_class()
 function frame_log($msg = '')
 { 
 	// Stop execution if not in debug mode
-	// if (defined('T_DEBUG') && T_DEBUG === false) return;
+	// if (defined('frame_DEBUG') && frame_DEBUG === false) return;
 	
 	if (is_array($msg) || is_object($msg)) $msg = var_export($msg, true) . "\n" . '--------------------';
 

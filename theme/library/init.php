@@ -196,16 +196,6 @@ function frame_show_image_sizes($sizes)
 add_filter('image_size_names_choose', 'frame_show_image_sizes');
 
 
-// add_filter('image_size_names_choose', 'my_image_sizes');
-// function my_image_sizes($sizes) {
-//     $addsizes = array(
-//         "full-hd" => __( "New Size")
-//     );
-//     $newsizes = array_merge($sizes, $addsizes);
-//     return $newsizes;
-// }
-
-
 //--------------------------------------------------------------------------------------------
 // Register theme menu locations
 //--------------------------------------------------------------------------------------------
@@ -268,6 +258,38 @@ function frame_no_admin_access()
 }
 
 add_action('admin_init', 'frame_no_admin_access', 100);
+
+
+//--------------------------------------------------------------------------------------------
+// Customise the TinyMCE editor
+//--------------------------------------------------------------------------------------------
+
+function frame_mce_buttons_2($buttons)
+{
+    if (!empty(frame_config('editor.style_formats')))
+        array_unshift($buttons, 'styleselect');
+
+    $remove_buttons = frame_config('editor.remove_buttons');
+
+    if (!empty($remove_buttons))
+        foreach ($remove_buttons as $remove)
+            if (($key = array_search($remove, $buttons)) !== false)
+                unset($buttons[$key]);
+
+    return $buttons;
+}
+
+if (!empty(frame_config('editor')))
+    add_filter('mce_buttons_2', 'frame_mce_buttons_2');
+
+function frame_mce_before_init_insert_formats($init_array)
+{
+    $init_array['style_formats'] = json_encode(frame_config('editor.style_formats'));  
+    return $init_array;
+} 
+
+if (!empty(frame_config('editor.style_formats')))
+    add_filter('tiny_mce_before_init', 'frame_mce_before_init_insert_formats');
 
 
 //--------------------------------------------------------------------------------------------
