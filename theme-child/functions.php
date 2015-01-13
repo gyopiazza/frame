@@ -2,16 +2,20 @@
 
 function child_init()
 {
+    global $wp_query;
 	// frame_config('application.version');
 	// echo '<pre>';
 	// print_r(frame_config('application.version'));
 	// echo '</pre>';
 	// var_dump(locate_template('config/'));
 
-	if (not('admin'))
-		echo 'frontend!';
-	else
-		echo 'admin!';
+	// if (is('admin', false))
+	// 	echo 'frontend!';
+	// else
+	// 	echo 'admin!';
+
+    // d(location(), 'location');
+    // d(get_queried_object());
 }
 
 add_action('init', 'child_init');

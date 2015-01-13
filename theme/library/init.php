@@ -23,6 +23,9 @@ require_once(locate_template('library/plugin-activation.php'));
 // Scan for hooks and import them
 $hooks = frame_load_files('hooks', true);
 
+// Scan for files to be autoloaded
+$autoload = frame_load_files('autoload', true);
+
 
 //--------------------------------------------------------------------------------------------
 // Theme initialisation
@@ -245,10 +248,10 @@ function frame_no_admin_access()
 {
     $redirect = isset($_SERVER['HTTP_REFERER'] ) ? $_SERVER['HTTP_REFERER'] : home_url('/');
 
-    $allowed_roles = frame_config('application');
+    $allowed_roles = frame_config('admin.access');
 
-    if (!empty($allowed_roles['access']))
-	    if (!frame_user_role($allowed_roles['access']))
+    if (!empty($allowed_roles))
+	    if (!frame_user_role($allowed_roles))
 	        exit(wp_redirect($redirect));
 }
 
@@ -286,15 +289,28 @@ if (!empty(frame_config('editor.style_formats')))
 
 
 //--------------------------------------------------------------------------------------------
+// Enable/Disable admin bar
+//--------------------------------------------------------------------------------------------
+
+$admin_bar = frame_config('admin.admin_bar');
+
+if ($admin_bar === false)
+    add_filter('show_admin_bar', '__return_false');
+else if (is_array($admin_bar) && !frame_user_role($admin_bar))
+    add_filter('show_admin_bar', '__return_false');
+
+
+
+//--------------------------------------------------------------------------------------------
 // Admin bar logo
 //--------------------------------------------------------------------------------------------
 
 function frame_admin_bar_logo_init()
 {
-    $application = frame_config('application');
+    $admin_bar_logo = frame_config('admin.admin_bar_logo');
 
-    if (!empty($application['admin_bar_logo']))
-        echo '<style type="text/css">#wp-admin-bar-wp-logo > .ab-item .ab-icon {background-image: url(' . $application['admin_bar_logo'] . ') !important; background-position: 0 0; } #wpadminbar #wp-admin-bar-wp-logo.hover > .ab-item .ab-icon {background-position: 0 0; } </style>';
+    if (!empty($admin_bar_logo))
+        echo '<style type="text/css">#wp-admin-bar-wp-logo > .ab-item .ab-icon {background-image: url(' . $admin_bar_logo . ') !important; background-position: 0 0; } #wpadminbar #wp-admin-bar-wp-logo.hover > .ab-item .ab-icon {background-position: 0 0; } </style>';
 
         // echo '<style type="text/css">#header-logo { background-image: url('.$application['admin_logo'].') !important; }</style>';
         // echo '<style type="text/css">#header-logo { background-image: url('.$application['admin_logo'].') !important; }</style>';
@@ -309,28 +325,26 @@ add_action('admin_head', 'frame_admin_bar_logo_init');
 
 function frame_admin_login_logo_init()
 {
-    $application = frame_config('application');
+    $admin_login_logo = frame_config('admin.admin_login_logo');
 
-    if (!empty($application['admin_login_logo']))
-        echo '<style type="text/css">body.login div#login h1 a {background-image: url('.$application['admin_login_logo'].'); } </style>';
+    if (!empty($admin_login_logo))
+        echo '<style type="text/css">body.login div#login h1 a {background-image: url('.$admin_login_logo.'); } </style>';
 }
 
 add_action('login_enqueue_scripts', 'frame_admin_login_logo_init');
 
 
 //--------------------------------------------------------------------------------------------
-// Enable/Disable admin bar
+// Custom admin footer message
 //--------------------------------------------------------------------------------------------
 
-$application = frame_config('application');
-
-if (isset($application['admin_bar']))
+function frame_admin_footer()
 {
-    if ($application['admin_bar'] === false)
-        add_filter('show_admin_bar', '__return_false');
-    else if (is_array($application['admin_bar']) && !frame_user_role($application['admin_bar']))
-        add_filter('show_admin_bar', '__return_false');
+    $admin_footer = frame_config('admin.admin_footer');
+    if (!empty($admin_footer)) echo $admin_footer;
 }
+
+add_filter('admin_footer_text', 'frame_admin_footer');
 
 
 //--------------------------------------------------------------------------------------------
@@ -357,21 +371,6 @@ function frame_remove_comments_support()
 }
 
 add_action('admin_init', 'frame_remove_comments_support');
-
-
-//--------------------------------------------------------------------------------------------
-// Custom admin footer message
-//--------------------------------------------------------------------------------------------
-
-function frame_admin_footer()
-{
-    $application = frame_config('application');
-
-    if (!empty($application['admin_footer']))
-        echo $application['admin_footer'];
-}
-
-add_filter('admin_footer_text', 'frame_admin_footer');
 
 
 //--------------------------------------------------------------------------------------------
@@ -408,7 +407,7 @@ add_action('tgmpa_register', 'frame_register_required_plugins');
 // Files editor (Appearance > Editor)
 //----------------------------------------------------------------------------------------
 
-if (!defined('DISALLOW_FILE_EDIT') && frame_config('application.files_editor') === false)
+if (!defined('DISALLOW_FILE_EDIT') && frame_config('admin.files_editor') === false)
     define('DISALLOW_FILE_EDIT', true);
 
 
@@ -417,5 +416,5 @@ if (!defined('DISALLOW_FILE_EDIT') && frame_config('application.files_editor') =
 //----------------------------------------------------------------------------------------
 
 if (!defined('WP_POST_REVISIONS'))
-    define('WP_POST_REVISIONS', frame_config('application.post_revisions'));
+    define('WP_POST_REVISIONS', frame_config('admin.post_revisions'));
 

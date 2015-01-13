@@ -227,27 +227,57 @@ function frame_segments($index = null)
 /**
  * Get/Check the current location
  *
- * @param array $params TODO...
+ * @param array $params The parameters to check against the current location
  */
 
 function frame_location($params = null)
 {
     global $post, $pagenow, $typenow, $current_screen;
 
+    // If there is more than one argument, they are set as key => val
+    // Example: frame_location('admin', true, 'post_type', 'page');
+    $num_args = func_num_args();
+
+    if ($num_args > 0)
+    {
+        $args = array();
+
+        // Passing in keys as args this time so we don't need to access global scope
+        for ($i = 0; $i < $num_args; $i++)
+        {
+            // Run following code on even args
+            // (the even args are numbered as odd since it counts from zero)
+            // `% 2` is a modulus operation (calculating remainder when dividing by 2)
+            if ($i % 2 != 0)
+            {
+                $key = func_get_arg($i - 1);
+                $val = func_get_arg($i);
+                // Join odd and even args together as key/value pairs
+                $args[$key] = $val;
+            }
+        }
+
+        // Set the arguments to the $params in order to continue as normal
+        if (!empty($args)) $params = $args;
+    }
+
+
     // d($_SERVER, '_SERVER');
     // d($_SERVER['PHP_SELF'], 'PHP_SELF');
     // d($_SERVER['REQUEST_URI'], 'REQUEST_URI');
     // d($_SERVER['SCRIPT_NAME'], 'SCRIPT_NAME');
 
+
     //////////////////////
 
-    $admin = is_admin();
-    $file = basename($_SERVER['SCRIPT_NAME']);
-    $page = isset($_REQUEST['page']) ? sanitize_key($_REQUEST['page']) : null;
-    $post_type = null;
-    $action = isset($_GET['action']) ? sanitize_key($_GET['action']) : null;
-    $ajax = (!defined('DOING_AJAX') || DOING_AJAX === false) ? false : true;
-    $is_saving = (!empty($_POST)) ? true : false;
+    $admin      = is_admin(); // Are we in the admin area?
+    $frontend   = !$admin; // Are we in the frontend area?
+    $file       = basename($_SERVER['SCRIPT_NAME']); // The current filename (in the frontend it's always 'index.php')
+    $page       = isset($_REQUEST['page']) ? sanitize_key($_REQUEST['page']) : null; // The current page number (used when paginating results)
+    $post_type  = null; // The current post type
+    $action     = isset($_GET['action']) ? sanitize_key($_GET['action']) : null; // Used in the admin
+    $ajax       = (!defined('DOING_AJAX') || DOING_AJAX === false) ? false : true; // Are doing an ajax request?
+    $saving     = (!empty($_POST)) ? true : false; // Are we sending post data? (maybe change this...)
 
     // Get type from post object
     if ($post && $post->post_type)
@@ -264,7 +294,7 @@ function frame_location($params = null)
     // Standard posts
     else if ($file == 'edit.php' && !isset($_REQUEST['post_type']) && $admin)
         $post_type = 'post';
-    // Attachment
+    // Attachments
     else if ($file == 'upload.php' && !isset($_REQUEST['post_type']) && $admin)
         $post_type = 'attachment';
     // When inside edit screens, get the post type from the post ID
@@ -276,13 +306,14 @@ function frame_location($params = null)
 
     // Put the values together
     $location = array(
-        'admin' => $admin,
-        'file' => $file,
-        'page' => $page,
-        'post_type' => $post_type,
-        'action' => $action,
-        'ajax' => $ajax,
-        'is_saving' => $is_saving
+        'admin'         => $admin,
+        'frontend'      => $frontend,
+        'file'          => $file,
+        'page'          => $page,
+        'post_type'     => $post_type,
+        'action'        => $action,
+        'ajax'          => $ajax,
+        'saving'        => $saving
     );
 
     // d($current_screen, 'current_screen', true);
@@ -294,6 +325,7 @@ function frame_location($params = null)
     // d('==========================================================');
 
     // d($location, 'Current location');
+
 
     //////////////////////
 
@@ -318,7 +350,7 @@ function frame_location($params = null)
                 else
                 {
                     // d($val, 'normal');
-                    if ($location[$key] !== $val)
+                    if ($location[$key] != $val)
                         return false;
                 }
             }
@@ -327,7 +359,7 @@ function frame_location($params = null)
         return true;
     }
     // Return one element from the $location array
-    // Example: frame_location('param'); // Return 'param' from array
+    // Example: frame_location('param'); // Returns 'param' from $location
     else if (is_string($params))
     {
         return (isset($location[$params])) ? $location[$params] : null;
@@ -342,7 +374,6 @@ function frame_location($params = null)
     // global $current_screen;
     // d($current_screen, 'current_screen');
 }
-
 
 
 /**
@@ -421,9 +452,9 @@ function frame_count_posts_by_author($user_id)
 if (!function_exists('config')) { function config($file = false, $refresh = false) { return frame_config($file, $refresh); } }
 if (!function_exists('partial')) { function partial($partial) { return frame_partial($partial); } }
 if (!function_exists('segments')) { function segments($index = null) { return frame_segments($index); } }
-if (!function_exists('location')) { function location($params = null) { return frame_location($params); } }
-if (!function_exists('is')) { function is($params = null) { return frame_location($params); } }
-if (!function_exists('not')) { function not($params = null) { return !frame_location($params); } }
+if (!function_exists('location')) { function location() { $args = func_get_args(); return call_user_func_array('frame_location', $args); } }
+if (!function_exists('is')) { function is() { $args = func_get_args(); return call_user_func_array('frame_location', $args); } }
+if (!function_exists('not')) { function not() { $args = func_get_args(); return call_user_func_array('frame_location', $args); } }
 if (!function_exists('pagination')) { function pagination($pages = null, $range = 4) { return frame_pagination($pages, $range); } }
 
 

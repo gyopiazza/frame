@@ -46,11 +46,26 @@ return array(
     //     'external_url'       => 'https://github.com/thomasgriffin/New-Media-Image-Uploader', // If set, overrides default API URL and points to an external URL.
     // ),
 
-    // // This is an example of how to include a plugin from the WordPress Plugin Repository.
-    // array(
-    //     'name'      => 'BuddyPress',
-    //     'slug'      => 'buddypress',
-    //     'required'  => false,
-    // ),
+    // This is an example of how to include a plugin from the WordPress Plugin Repository.
+    array(
+        'name'             => 'Debug Bar',
+        'slug'             => 'debug-bar',
+        'required'         => false,
+        'force_activation' => true,
+    ),
+
+    array(
+        'name'             => 'Theme Check',
+        'slug'             => 'theme-check',
+        'required'         => false,
+        'force_activation' => true,
+    ),
+
+    array(
+        'name'             => 'Themeforest Check',
+        'slug'             => 'themeforest-check',
+        'required'         => false,
+        'force_activation' => true,
+    ),
 
 );
