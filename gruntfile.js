@@ -13,6 +13,7 @@ module.exports = function(grunt) {
         sass:   'assets/sass/',
         js:     'assets/js/',
         img:    'assets/img/',
+        hooks:  'hooks/',
         tests:  'tests/'
     };
 
@@ -67,6 +68,12 @@ module.exports = function(grunt) {
 
     // Build and create a theme package for development
     grunt.registerTask('build-dev', ['sass', 'autoprefixer', 'cssmin', 'uglify', 'clean', 'copy:dev', 'imagemin', 'compress']);
+
+    // Enable all the hooks
+    grunt.registerTask('enable_hooks', ['rename:enable_hooks']);
+
+    // Disable all the hooks
+    grunt.registerTask('disable_hooks', ['rename:disable_hooks']);
 
     // Run the tests
     grunt.registerTask('test', ['dalek']);

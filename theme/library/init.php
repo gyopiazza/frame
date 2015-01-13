@@ -82,7 +82,7 @@ function frame_theme_setup()
     //----------------------------------------------------------------------------------------
     // TinyMCE editor style
     //----------------------------------------------------------------------------------------
-    
+
     $editor_styles = frame_config('assets.editor_styles');
 
     if (!empty($editor_styles))
@@ -92,7 +92,7 @@ function frame_theme_setup()
             foreach ($editor_styles as $editor_style)
                 add_editor_style($editor_style);
     }
-    
+
 
     //----------------------------------------------------------------------------------------
     // Theme activation and deactivation functions
@@ -133,7 +133,7 @@ function frame_assets($enqueue = false)
         foreach($assets['javascript_data'] as $asset)
             call_user_func_array('wp_localize_script', $asset);
 
-    // Load the comment reply script on singular posts with open comments if threaded comments are supported. 
+    // Load the comment reply script on singular posts with open comments if threaded comments are supported.
     if ($enqueue === true && is_singular() && get_option('thread_comments') && comments_open())
         wp_enqueue_script('comment-reply');
 }
@@ -158,7 +158,7 @@ function frame_activation_redirect()
 {
     $redirect = frame_config('application.activation_redirect');
     if (!empty($redirect)) wp_redirect($redirect);
-    
+
 }
 
 add_action('after_switch_theme', 'frame_activation_redirect');
@@ -277,9 +277,9 @@ if (!empty(frame_config('editor')))
 
 function frame_mce_before_init_insert_formats($init_array)
 {
-    $init_array['style_formats'] = json_encode(frame_config('editor.style_formats'));  
+    $init_array['style_formats'] = json_encode(frame_config('editor.style_formats'));
     return $init_array;
-} 
+}
 
 if (!empty(frame_config('editor.style_formats')))
     add_filter('tiny_mce_before_init', 'frame_mce_before_init_insert_formats');
@@ -310,7 +310,7 @@ add_action('admin_head', 'frame_admin_bar_logo_init');
 function frame_admin_login_logo_init()
 {
     $application = frame_config('application');
-    
+
     if (!empty($application['admin_login_logo']))
         echo '<style type="text/css">body.login div#login h1 a {background-image: url('.$application['admin_login_logo'].'); } </style>';
 }
@@ -381,7 +381,7 @@ add_filter('admin_footer_text', 'frame_admin_footer');
 function frame_register_required_plugins()
 {
 	$plugins = frame_config('plugins');
-	
+
     if (!empty($plugins))
     {
         tgmpa($plugins);
@@ -396,7 +396,7 @@ function frame_register_required_plugins()
         //         $_GET['tgmpa-install'] = 'install-plugin';
         //         TGM_Plugin_Activation::$instance->do_plugin_install();
         //     }
-            
+
         // }
     }
 }

@@ -24,7 +24,7 @@ function frame_config($file = false, $refresh = false)
     if ($file === false)
     {
         // Get an array with all the config files
-        $config_files = frame_load_files('config', false, false);
+        $config_files = frame_load_files('config', true, false);
 
         // Add all the config files to the $config array
         foreach ($config_files as $config_file)
@@ -62,7 +62,7 @@ function frame_config($file = false, $refresh = false)
                     return frame_dot_array($config[$config_item], $segments);
                 }
                 else
-                { 
+                {
                     return $config[$config_item];
                 }
             }
@@ -78,7 +78,7 @@ function frame_config($file = false, $refresh = false)
                 return frame_dot_array($config[$config_item], $segments);
             }
             else
-            { 
+            {
                 return $config[$config_item];
             }
         }
@@ -123,7 +123,6 @@ function frame_dot_array(array $a, $path, $default = null)
 function frame_load_files($folder, $include = false, $extension = true)
 {
     $path = locate_template($folder);
-    // $path = get_stylesheet_directory().'/'.$folder;
     $files = array();
 
     if (is_dir($path))
@@ -134,10 +133,20 @@ function frame_load_files($folder, $include = false, $extension = true)
         {
             if (!$item->isDot() && $item->isFile())
             {
-                if (substr($item->getFilename(), 0, 1) !== '_')
+                if (substr($item->getFilename(), 0, 1) !== '.' &&
+                    substr($item->getFilename(), 0, 1) !== '_')
                 {
                     if ($include === true) include($item->getPathname());
                     $files[] = ($extension === true) ? $item->getFilename() : $item->getBasename('.' .$item->getExtension());
+                }
+            }
+            // Recursive
+            else if (!$item->isDot() && $item->isDir())
+            {
+                if (substr($item->getBasename(), 0, 1) !== '.' &&
+                    substr($item->getBasename(), 0, 1) !== '_')
+                {
+                    $files = frame_load_files($folder.'/'.$item->getBasename(), $include, $extension);
                 }
             }
         }
@@ -172,7 +181,7 @@ function frame_partial($partial)
 // URI: /this/is//a/path/to///nothing
 // echo segments(4);   = path
 // echo segments(18);  = null
-// echo segments();    = /this/is/a/path/to/nothing  
+// echo segments();    = /this/is/a/path/to/nothing
 
 function frame_segments($index = null)
 {
@@ -202,7 +211,7 @@ function frame_segments($index = null)
         $locale = (defined('ICL_LANGUAGE_CODE')) ? ICL_LANGUAGE_CODE : 'en';
         if (isset($segments[0]) && $segments[0] == $locale) unset($segments[0]);
     }
-    
+
     // if no $index was requested, emulate REQUEST_URI
     if ($index === null)
     {
@@ -283,7 +292,7 @@ function frame_location($params = null)
     // d($post_type, 'post_type', true);
     // d($action, 'action', true);
     // d('==========================================================');
-    
+
     // d($location, 'Current location');
 
     //////////////////////
@@ -350,12 +359,12 @@ function frame_user_role($role, $user_id = null)
     $user = get_userdata($user_id);
   else
     $user = wp_get_current_user();
-  
+
   if (empty($user))
     return false;
-  
+
   $intersection = array_intersect((array) $role, (array) $user->roles);
-  
+
   return !empty($intersection) ? true : false;
 }
 
@@ -534,11 +543,11 @@ function custom_menu_order($menu_ord) {
 //         case 'post':
 //         add_editor_style('editor-style-post.css');
 //         break;
-        
+
 //         case 'page':
 //         add_editor_style('editor-style-page.css');
 //         break;
-    
+
 //         case 'portfolio':
 //         add_editor_style('editor-style-portfolio.css');
 //         break;
@@ -553,7 +562,7 @@ function custom_menu_order($menu_ord) {
 // REMOVE THE WORDPRESS UPDATE NOTIFICATION FOR ALL USERS EXCEPT SYSADMIN
 // global $user_login;
 // get_currentuserinfo();
-// if (!current_user_can('update_plugins')) { // checks to see if current user can update plugins 
+// if (!current_user_can('update_plugins')) { // checks to see if current user can update plugins
 //     add_action( 'init', create_function( '$a', "remove_action( 'init', 'wp_version_check' );" ), 2 );
 //     add_filter( 'pre_option_update_core', create_function( '$a', "return null;" ) );
 // }
