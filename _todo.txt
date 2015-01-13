@@ -5,6 +5,9 @@ Useful links:
 - https://github.com/justintadlock/hybrid-core
 - https://github.com/use-init/init
 - https://github.com/FlagshipWP/compass
+- https://github.com/justintadlock/get-the-image
+
+IMPORTANT: Include grunt-newer in the tasks
 
 Reorganize files/folder... maybe move helpers and init to 'library' to clean up the theme root
 
@@ -24,6 +27,8 @@ Add automatic documentation generator
 
 Add example widget to 'widgets'
 
+Add application.version to the js/css assets
+
 Implement – somehow – the rewrite rules from pins
 
 Fix admin_bar_logo
@@ -36,3 +41,5 @@ Maybe move the 'plugins' folder inside 'library'
 Add login background image option (or hook)
 
 Move hooks.images_quality to config.media
+
+Test functions conflict by duplicating the theme and launching the customizer

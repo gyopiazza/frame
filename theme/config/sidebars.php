@@ -13,9 +13,9 @@ return array(
 
 	// First sidebar
 	array(
+		'id'			=> 'first-sidebar',
 		'name'			=> __('First sidebar', 'theme'),
 		'description'	=> __('Area of first sidebar', 'theme'),
-		'id'			=> 'first-sidebar',
 		'class'         => '',
 		'before_widget' => '<div id="%1$s" class="widget %2$s">',
         'after_widget'  => '</div>',

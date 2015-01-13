@@ -7,5 +7,9 @@ module.exports = {
     js: {
         files: '<%= jshint.all %>',
         tasks: ['jshint', 'uglify:main']
+    },
+    js_plugins: {
+        files: '<%= config.root %><%= config.js %>vendor/**/*.js',
+        tasks: ['uglify:plugins']
     }
 };

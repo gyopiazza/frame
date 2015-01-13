@@ -170,16 +170,16 @@ function frame_partial($partial)
  */
 
 // URI: /this/is//a/path/to///nothing
-// echo segments( 4 );  // path
-// echo segments( 18 ); // NULL
-// echo segments();     // /this/is/a/path/to/nothing  
+// echo segments(4);   = path
+// echo segments(18);  = null
+// echo segments();    = /this/is/a/path/to/nothing  
 
 function frame_segments($index = null)
 {
     static $segments;
 
     // build $segments on first function call
-    if (NULL === $segments)
+    if ($segments === null)
     {
         global $wp;
 
@@ -203,15 +203,15 @@ function frame_segments($index = null)
         if (isset($segments[0]) && $segments[0] == $locale) unset($segments[0]);
     }
     
-    // if $index is NULL, emulate REQUEST_URI
-    if (NULL === $index)
+    // if no $index was requested, emulate REQUEST_URI
+    if ($index === null)
     {
         return '/' . implode('/', $segments);
     }
 
-    // return the segment index if valid, otherwise NULL
+    // return the segment index if valid, otherwise null
     $index = (int) $index - 1;
-    return isset($segments[$index]) ? $segments[$index] : NULL;
+    return isset($segments[$index]) ? $segments[$index] : null;
 }
 
 
@@ -413,6 +413,8 @@ if (!function_exists('config')) { function config($file = false, $refresh = fals
 if (!function_exists('partial')) { function partial($partial) { return frame_partial($partial); } }
 if (!function_exists('segments')) { function segments($index = null) { return frame_segments($index); } }
 if (!function_exists('location')) { function location($params = null) { return frame_location($params); } }
+if (!function_exists('is')) { function is($params = null) { return frame_location($params); } }
+if (!function_exists('not')) { function not($params = null) { return !frame_location($params); } }
 if (!function_exists('pagination')) { function pagination($pages = null, $range = 4) { return frame_pagination($pages, $range); } }
 
 

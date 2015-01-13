@@ -1,13 +1,26 @@
 {
   "name": "frame",
-  "title": "Frame",
+  "capitalname": "Frame",
   "version": "1.0.0",
-  "homepage": "https://github.com/gyopiazza/frame",
+  "copyright": "2015",
+  "license": "GPL-2.0+",
+  "private": true,
+  "theme": {
+    "name": "Frame",
+    "uri": "https://github.com/gyopiazza/frame",
+    "description": "A theme for developers with a nicely organised structure and resources autoloading.",
+    "author": "Gyo Piazza",
+    "authoruri": "http://giordanopiazza.com",
+    "tags": "easy, organised, expressive, template, engine, utility.",
+    "license": "GPL-2.0+",
+    "licenseuri": "http://www.gnu.org/licenses/gpl-2.0.html",
+    "textdomain": "theme",
+    "domainpath": "/languages"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/gyopiazza/frame.git"
   },
-  "license": "MIT",
   "dependencies": {},
   "devDependencies": {
     "dalek-browser-chrome": "0.0.11",
@@ -25,6 +38,7 @@
     "grunt-contrib-uglify": "~0.5.1",
     "grunt-contrib-watch": "~0.6.1",
     "grunt-dalek": "^0.2.0",
+    "grunt-newer": "^1.1.0",
     "load-grunt-config": "^0.16.0"
   }
 }

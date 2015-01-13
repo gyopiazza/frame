@@ -17,7 +17,7 @@ require_once(locate_template('library/plugin-activation.php'));
 
 
 //--------------------------------------------------------------------------------------------
-// Automatically load files
+// Automatically load files from folders
 //--------------------------------------------------------------------------------------------
 
 // Scan for hooks and import them
@@ -132,6 +132,10 @@ function frame_assets($enqueue = false)
     if (!empty($assets['javascript_data']))
         foreach($assets['javascript_data'] as $asset)
             call_user_func_array('wp_localize_script', $asset);
+
+    // Load the comment reply script on singular posts with open comments if threaded comments are supported. 
+    if ($enqueue === true && is_singular() && get_option('thread_comments') && comments_open())
+        wp_enqueue_script('comment-reply');
 }
 
 add_action('init', 'frame_assets');
@@ -192,7 +196,8 @@ add_filter('image_size_names_choose', 'frame_show_image_sizes');
 
 function frame_register_menu_locations()
 {
-    register_nav_menus(frame_config('menus'));
+    $menus = frame_config('menus');
+    if (!empty($menus)) register_nav_menus($menus);
 }
 
 add_action('init', 'frame_register_menu_locations');
