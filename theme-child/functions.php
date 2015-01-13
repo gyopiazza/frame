@@ -16,6 +16,8 @@ function child_init()
 
     // d(location(), 'location');
     // d(get_queried_object());
+
+
 }
 
 add_action('init', 'child_init');
@@ -23,4 +25,3 @@ add_action('init', 'child_init');
 
 // var_dump(locate_template('config/'));
 // var_dump(is_child_theme());
-

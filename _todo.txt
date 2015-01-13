@@ -9,7 +9,7 @@ Useful links:
 
 IMPORTANT: Include grunt-newer in the tasks
 
-Reorganize files/folder... maybe move helpers and init to 'library' to clean up the theme root
+Reorganize files/folder... maybe move everything inside a "frame" folder?
 
 Add 'admin' config file and move some items from 'application'
 
@@ -45,3 +45,7 @@ Move hooks.images_quality to config.media
 Test functions conflict by duplicating the theme and launching the customizer
 
 Add support for Polylang in helpers/frame_segments
+
+Add cron config (?)
+
+Rename all the hook functions to 'frame_hook_function_name'

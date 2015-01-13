@@ -39,6 +39,14 @@ return array(
 
 
     // ---------------------------------------------------------------
+    // An array (extension => mime) of additional allowed mime types
+    // ---------------------------------------------------------------
+    'mime_types' => array(
+        // 'applescript' => 'application/x-applescript'
+    ),
+
+
+    // ---------------------------------------------------------------
     // Redirect on theme activation
     // ---------------------------------------------------------------
     // 'activation_redirect' => 'themes.php?page=themeoptions',

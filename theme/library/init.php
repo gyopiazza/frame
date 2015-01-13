@@ -161,7 +161,6 @@ function frame_activation_redirect()
 {
     $redirect = frame_config('application.activation_redirect');
     if (!empty($redirect)) wp_redirect($redirect);
-
 }
 
 add_action('after_switch_theme', 'frame_activation_redirect');
@@ -175,8 +174,6 @@ function frame_show_image_sizes($sizes)
 {
     $image_sizes = frame_config('images');
     $custom_sizes = array();
-
-    frame_log($image_sizes);
 
     if (!empty($image_sizes))
     {
@@ -289,6 +286,27 @@ if (!empty(frame_config('editor.style_formats')))
 
 
 //--------------------------------------------------------------------------------------------
+// Media library mime-types
+//--------------------------------------------------------------------------------------------
+
+function frame_hook_mime_types($wp_mime_types)
+{
+    $mime_types = frame_config('application.mime_types');
+    // $mime_types['applescript'] = 'application/x-applescript'; //Adding applescript extension
+    // $mime_types['avi'] = 'video/avi'; //Adding avi extension
+    // unset($mime_types['pdf']); //Removing the pdf extension
+
+    if (!empty($mime_types))
+        foreach ($mime_types as $extension => $type)
+            $wp_mime_types[$extension] = $type;
+
+    return $wp_mime_types;
+}
+
+add_filter('upload_mimes', 'frame_hook_mime_types', 1, 1);
+
+
+//--------------------------------------------------------------------------------------------
 // Enable/Disable admin bar
 //--------------------------------------------------------------------------------------------
 
@@ -298,7 +316,6 @@ if ($admin_bar === false)
     add_filter('show_admin_bar', '__return_false');
 else if (is_array($admin_bar) && !frame_user_role($admin_bar))
     add_filter('show_admin_bar', '__return_false');
-
 
 
 //--------------------------------------------------------------------------------------------
