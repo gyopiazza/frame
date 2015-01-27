@@ -114,6 +114,19 @@ add_action('after_setup_theme', 'frame_theme_setup');
 
 
 //--------------------------------------------------------------------------------------------
+// Flush rules on theme activation
+//--------------------------------------------------------------------------------------------
+
+function frame_hook_switch_theme()
+{
+    if (frame_config('application.flush_rewrite_rules'))
+        flush_rewrite_rules(true);
+}
+
+add_action('after_switch_theme', 'frame_hook_switch_theme');
+
+
+//--------------------------------------------------------------------------------------------
 // Assets
 //--------------------------------------------------------------------------------------------
 

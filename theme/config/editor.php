@@ -8,7 +8,7 @@
  *
  * @link http://codex.wordpress.org/TinyMCE_Custom_Styles
  * @link http://www.tinymce.com/wiki.php/Configuration:formats
- * 
+ *
  * @package frame
  */
 
@@ -18,9 +18,10 @@ return array(
 	'style_formats' => array(
 		array('title' => '.someclass', 'block' => 'div', 'classes' => 'someclass', 'wrapper' => true),
 	),
-	
+
 	// Remove buttons from the toolbar
-	// Available: formatselect, underline, alignjustify, forecolor, pastetext, removeformat, charmap, outdent, indent, undo, redo, wp_help
+	// Available: formatselect, underline, alignjustify, forecolor, pastetext,
+    // removeformat, charmap, outdent, indent, undo, redo, wp_help
 	'remove_buttons' =>	array(),
 );
 

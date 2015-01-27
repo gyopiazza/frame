@@ -1,1 +1,0 @@
-Place here partials like the post items used in the loops…

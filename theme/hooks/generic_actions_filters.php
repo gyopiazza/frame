@@ -25,7 +25,7 @@ remove_action('wp_head', 'rel_canonical');
 remove_action('wp_head', 'wp_shortlink_wp_head', 10, 0);
 
 
-			
+
 
 // WPML
 // if (isset($sitepress)) remove_action('wp_head', array($sitepress, 'meta_generator_tag'));
@@ -53,3 +53,4 @@ add_filter('widget_text', 'do_shortcode'); // Allow shortcodes in widgets (Dynam
 
 // remove_filter('the_excerpt', 'wpautop'); // Remove <p> tags from Excerpt altogether
 // remove_filter('single_post_title', 'strip_tags'); // Don't strip tags on single post titles
+

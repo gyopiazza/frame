@@ -6,12 +6,11 @@ Useful links:
 - https://github.com/use-init/init
 - https://github.com/FlagshipWP/compass
 - https://github.com/justintadlock/get-the-image
+- https://github.com/UpTrendingLLC/WP-Scaffolding
 
 IMPORTANT: Include grunt-newer in the tasks
 
 Reorganize files/folder... maybe move everything inside a "frame" folder?
-
-Add 'admin' config file and move some items from 'application'
 
 Add 'environments' to the config files to load different files depending on the environment (especially useful for assets dev/live)
 
@@ -38,7 +37,7 @@ Separate 'helpers' into api and helpers (?)
 Add some plugins for development (duplicate post, regenerate thumbnails, cache, auto optimize, debug bar...)
 Maybe move the 'plugins' folder inside 'library'
 
-Add login background image option (or hook)
+Add login background image option (or hook), or better add an admin_login_css file to be loaded
 
 Move hooks.images_quality to config.media
 

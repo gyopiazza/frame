@@ -17,7 +17,7 @@ module.exports = function(grunt) {
         tests:  'tests/'
     };
 
-    
+
     //////////////////////////////////////////////////////////////
 
 
@@ -49,7 +49,7 @@ module.exports = function(grunt) {
         //allows to manipulate the config object before it gets merged with the data object
         // preMerge: function(config, data) {}
     });
-    
+
 
     //////////////////////////////////////////////////////////////
 
@@ -76,7 +76,20 @@ module.exports = function(grunt) {
     grunt.registerTask('disable_hooks', ['rename:disable_hooks']);
 
     // Run the tests
-    grunt.registerTask('test', ['dalek']);
+    // grunt.registerTask('test', ['dalek']);
+
+    grunt.registerTask('test', 'Run the tests', function(arg1) {
+
+      if (arguments.length === 0) {
+        // grunt.log.writeln(this.name + ", no args");
+        grunt.task.run(['dalek']);
+      } else {
+        // grunt.log.writeln(this.name + ", " + arg1 + " | " + arg2);
+        grunt.task.run('dalek:'+arg1);
+      }
+
+      // grunt.log.writeln('The task was OK!');
+    });
 
 
     //////////////////////////////////////////////////////////////

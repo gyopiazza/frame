@@ -13,7 +13,7 @@ module.exports = {
         }
     },
 
-    dist: {
+    all: {
       src: ['<%= config.tests %>**/*.js']
     }
 };

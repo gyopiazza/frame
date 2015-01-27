@@ -47,6 +47,12 @@ return array(
 
 
     // ---------------------------------------------------------------
+    // Flush rewrite rules on theme activation
+    // ---------------------------------------------------------------
+    'flush_rewrite_rules' => true,
+
+
+    // ---------------------------------------------------------------
     // Redirect on theme activation
     // ---------------------------------------------------------------
     // 'activation_redirect' => 'themes.php?page=themeoptions',
