@@ -27,6 +27,7 @@ Add automatic documentation generator
 Add example widget to 'widgets'
 
 Add application.version to the js/css assets
+Add IE conditional assets loading (http://www.quirksmode.org/css/condcom.html)
 
 Implement – somehow – the rewrite rules from pins
 

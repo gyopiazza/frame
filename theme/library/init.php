@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Framework starting point
+ * Framework initialization
  *
  * @package frame
  */
@@ -12,6 +12,9 @@ require_once(locate_template('library/debug.php'));
 // Load the helpers file
 require_once(locate_template('library/helpers.php'));
 
+// Load the aliases file
+require_once(locate_template('library/aliases.php'));
+
 // Load the plugins activation class
 require_once(locate_template('library/plugin-activation.php'));
 
@@ -20,11 +23,13 @@ require_once(locate_template('library/plugin-activation.php'));
 // Automatically load files from folders
 //--------------------------------------------------------------------------------------------
 
-// Scan for hooks and import them
-$hooks = frame_load_files('hooks', true);
+// Scan and import hooks
+// $hooks = frame_load_files('hooks', true);
+frame_load_files('hooks', true);
 
-// Scan for files to be autoloaded
-$autoload = frame_load_files('autoload', true);
+// Scan and import files to be autoloaded
+// $autoload = frame_load_files('autoload', true);
+frame_load_files('autoload', true);
 
 
 //--------------------------------------------------------------------------------------------

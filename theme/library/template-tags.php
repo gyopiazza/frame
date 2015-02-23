@@ -9,7 +9,7 @@
  *
  * @todo Cleanup
  * @param $pages The maximum amount of pages to display
- * @param $range 
+ * @param $range
  * @return string The pagination HTML
  */
 
@@ -63,4 +63,32 @@ function frame_pagination($pages = null, $range = 4)
 
         echo '</ul>' . PHP_EOL;
     }
+}
+
+
+
+/**
+ * Output a custom length excerpt (must be used inside the loop)
+ *
+ * @param int $length The number of characters to output
+ * @return string
+ */
+
+function frame_get_excerpt($length = 40)
+{
+    global $post;
+    $content = strip_tags($post->post_content);
+    if (empty($content)) {
+        $content = strip_tags($post->post_excerpt);
+    }
+
+    preg_match('/^\s*+(?:\S++\s*+){1,' . $length . '}/', $content, $matches);
+
+    if (!empty($matches[0]))
+        return '<p>' . $matches[0] . '...</p>';
+}
+
+function frame_excerpt($length = 40)
+{
+    echo frame_get_excerpt($length);
 }

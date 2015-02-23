@@ -13,11 +13,8 @@ return array(
 	// ---------------------------------------------------------------
 	// Restrict access to the WordPress Admin for users with a
 	// specific role.
-	// Once the theme is activated, you can only log in by going
-	// to 'wp-login.php' or 'login' (if permalinks changed) urls.
-	// By default, allows 'administrator', 'editor', 'author',
-	// 'contributor' and 'subscriber' to access the ADMIN area.
-	// Edit this configuration in order to limit access.
+	// By default, 'administrator', 'editor', 'author',
+	// 'contributor' and 'subscriber' are allowed to the Admin area.
 	// ---------------------------------------------------------------
 	'access' => array(
 		// Default roles
@@ -30,9 +27,9 @@ return array(
 
 
 	// ---------------------------------------------------------------
-	// Disable the admin bar in the frontend
-	// - Set a bool true/false to control the bar for all users
-	// - Set an array of user roles to enable the bar only for them
+	// Disable the admin bar in the frontend.
+	// - Set a bool true/false to control the bar for all users.
+	// - Set an array of user roles to enable the bar only for those.
 	// ---------------------------------------------------------------
 	'admin_bar' => true,
 
@@ -45,7 +42,7 @@ return array(
 
 
 	// ---------------------------------------------------------------
-	// Admin footer message (Replaces "Thank you for creating with WordPress")
+	// Admin footer message (Replaces "Thank you for creating...")
 	// ---------------------------------------------------------------
 	'admin_footer' => __('You are using a <a href="#">Theme</a> designed by <a href="#">Someone</a>', 'theme'),
 

@@ -47,5 +47,10 @@ return array(
 		array('theme-scripts', 'js_data', array(
 			'ajaxurl' => admin_url('admin-ajax.php'), // Accessible in JS via js_data.ajaxurl
 		)),
+        // TODO: Add conditional enqueuing, based on current location
+        // 'uri/to/page' OR better use frame_location()
+        // 'uri/to/page' => array('theme-scripts', 'js_data', array(
+        //     'ajaxurl' => admin_url('admin-ajax.php'), // Accessible in JS via js_data.ajaxurl
+        // )),
 	),
 );

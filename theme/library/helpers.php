@@ -137,7 +137,7 @@ function frame_load_files($folder, $include = false, $extension = true)
                     substr($item->getFilename(), 0, 1) !== '_')
                 {
                     if ($include === true) include($item->getPathname());
-                    $files[] = ($extension === true) ? $item->getFilename() : $item->getBasename('.' .$item->getExtension());
+                    $files[] = ($extension === true) ? $item->getFilename() : $item->getBasename('.'.$item->getExtension());
                 }
             }
             // Recursive
@@ -159,7 +159,7 @@ function frame_load_files($folder, $include = false, $extension = true)
 /**
  * Load a partial into a view
  *
- * @param string $partial The file name without extension, relative to the partials directory
+ * @param string $partial The file name without extension, relative to the 'partials' directory
  */
 
 function frame_partial($partial)
@@ -228,17 +228,19 @@ function frame_segments($index = null)
  * Get/Check the current location
  *
  * @param array $params The parameters to check against the current location
+ * @todo Add single, archive,
  */
 
 function frame_location($params = null)
 {
     global $post, $pagenow, $typenow, $current_screen;
 
-    // If there is more than one argument, they are set as key => val
-    // Example: frame_location('admin', true, 'post_type', 'page');
+    // Handle function arguments
     $num_args = func_num_args();
 
-    if ($num_args > 0)
+    // If there is more than one argument, they are set as key => val
+    // Example: frame_location('admin', true, 'post_type', 'page');
+    if ($num_args > 1)
     {
         $args = array();
 
@@ -260,6 +262,11 @@ function frame_location($params = null)
         // Set the arguments to the $params in order to continue as normal
         if (!empty($args)) $params = $args;
     }
+    // Allow for a single argument as a query string: arg1=something&arg2=somethingElse
+    else if ($num_args === 1 && is_string($params) && strpos($params, '=') !== false)
+    {
+        parse_str($params, $params);
+    }
 
 
     // d($_SERVER, '_SERVER');
@@ -278,6 +285,7 @@ function frame_location($params = null)
     $action     = isset($_GET['action']) ? sanitize_key($_GET['action']) : null; // Used in the admin
     $ajax       = (!defined('DOING_AJAX') || DOING_AJAX === false) ? false : true; // Are doing an ajax request?
     $saving     = (!empty($_POST)) ? true : false; // Are we sending post data? (maybe change this...)
+
 
     // Get type from post object
     if ($post && $post->post_type)
@@ -300,9 +308,7 @@ function frame_location($params = null)
     // When inside edit screens, get the post type from the post ID
     else if ($file == 'post.php' && isset($_REQUEST['post']) && !isset($_REQUEST['post_type']) && $admin)
         $post_type = get_post_type(sanitize_key($_REQUEST['post']));
-    // No post type available
-    // else
-        // $post_type = null;
+
 
     // Put the values together
     $location = array(
@@ -325,6 +331,9 @@ function frame_location($params = null)
     // d('==========================================================');
 
     // d($location, 'Current location');
+
+    // parse_str($params, $params);
+    // d($params, 'params');
 
 
     //////////////////////
@@ -401,42 +410,21 @@ function frame_user_role($role, $user_id = null)
 
 
 /**
- * Output a custom length excerpt (must be used inside the loop)
- *
- * @param int $length The number of characters to output
- * @return string
- */
-
-function frame_excerpt($length = 40)
-{
-    global $post;
-    $content = strip_tags($post->post_content);
-    if (empty($content)) {
-        $content = strip_tags($post->post_excerpt);
-    }
-
-    preg_match('/^\s*+(?:\S++\s*+){1,' . $length . '}/', $content, $matches);
-    if (!empty($matches[0])) {
-        echo "<p>" . $matches[0] . "...</p>";
-    }
-}
-
-
-/**
- * Gets the posts count by author
+ * Gets the posts count by author.
  *
  * @todo Add configurable post_type
  * @param int $user_id The ID of the posts author
+ * @param string|array The post type(s)
  * @return int The posts count
  */
 
-function frame_count_posts_by_author($user_id)
+function frame_count_posts_by_author($user_id, $post_type = array('post', 'page'))
 {
     $args = array(
-        'post_type' => array('club', 'classifieds'),
-        'author' => $user_id,
-        'post_staus' => 'publish',
-        'posts_per_page' => -1,
+        'post_type'      => $post_type,
+        'author'         => $user_id,
+        'post_staus'     => 'publish',
+        'posts_per_page' => -1
     );
 
     $query = new WP_Query($args);
@@ -445,17 +433,126 @@ function frame_count_posts_by_author($user_id)
 }
 
 
-//--------------------------------------------------------------------------------------------
-// Function aliases (just to make it nice and short...)
-//--------------------------------------------------------------------------------------------
+/**
+ * Social share links
+ *
+ * Returns a string with a ul list containing all the chosen sharing providers.
+ * Supported providers: facebook, google, linkedin, pinterest, reddit, twitter.
+ *
+ * @param array $providers An array of sharing providers
+ * @param int $post_id The post to share, if null the current URL will be used
+ * @return string A <ul> with the social sharing links
+ */
 
-if (!function_exists('config')) { function config($file = false, $refresh = false) { return frame_config($file, $refresh); } }
-if (!function_exists('partial')) { function partial($partial) { return frame_partial($partial); } }
-if (!function_exists('segments')) { function segments($index = null) { return frame_segments($index); } }
-if (!function_exists('location')) { function location() { $args = func_get_args(); return call_user_func_array('frame_location', $args); } }
-if (!function_exists('is')) { function is() { $args = func_get_args(); return call_user_func_array('frame_location', $args); } }
-if (!function_exists('not')) { function not() { $args = func_get_args(); return call_user_func_array('frame_location', $args); } }
-if (!function_exists('pagination')) { function pagination($pages = null, $range = 4) { return frame_pagination($pages, $range); } }
+function frame_share_links($providers = null, $post_id = null)
+{
+    // Get the providers
+    if ($providers === null)
+        $providers = array('facebook', 'google', 'linkedin', 'pinterest', 'reddit', 'twitter');
+    else
+        $providers = (array) $providers;
+
+    $output = '<ul>';
+
+    foreach($providers as $provider)
+    {
+        // $output .= '<li>'..'</li>';
+    }
+
+    $output .= '</ul>';
+}
+
+/**
+ * Social share provider URL
+ *
+ * Returns a string with the URL that allows to share the resource.
+ * Supported providers: facebook, google, linkedin, pinterest, reddit, twitter.
+ *
+ * @param string $provider The provider name to retrieve the share URL
+ * @param int $post_id The post to share, if null the current URL will be used
+ * @return string The share URL
+ */
+function frame_share($provider, $post_id = null)
+{
+
+    // $postid = url_to_postid( $url );
+
+    $defaults = array(
+        'provider' => null,
+        'post_id' => $post_id,
+        'url' => ($post_id === null) ? $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] : get_permalink($post_id),
+        'title' => ($post_id === null) ? '' : get_the_title($post_id),
+        'description' => '',
+        'tags' => '',
+        'source' => ''
+    );
+
+    if (is_array($provider))
+    {
+        $args = wp_parse_args($provider, $defaults);
+    }
+    else if (is_string($provider))
+    {
+
+    }
+
+
+
+    // Get the URL to share
+    $url = ($post_id === null) ? $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] : get_permalink($post_id);
+    $url = urlencode($url);
+
+    switch($args['provider'])
+    {
+        case 'facebook':
+            break;
+
+        case 'google':
+            break;
+
+        case 'linkedin':
+            break;
+
+        case 'pinterest':
+            break;
+
+        case 'reddit':
+            break;
+
+        case 'twitter':
+            break;
+
+        default:
+            break;
+    }
+
+
+}
+
+
+// frame_share_anchor('facebook', 123);
+// frame_share_anchor(array(
+//     'url' => get_permalink(),
+//     'title' => get_the_title()
+// ));
+
+// frame_share('facebook', 123);
+// frame_share(array(
+//     'url' => get_permalink(),
+//     'title' => get_the_title()
+// ));
+
+
+
+/**
+ * IE conditional comments
+ *
+ */
+
+function frame_ie_conditional_comments()
+{
+
+}
 
 
 
@@ -463,10 +560,15 @@ if (!function_exists('pagination')) { function pagination($pages = null, $range 
 // Maybe...
 //--------------------------------------------------------------------------------------------
 
+function removeArrayDuplicates($array)
+{
+    $input = array_map('unserialize', array_unique(array_map('serialize'), $input)));
+}
+
 function is_empty($element)
 {
     $element = trim($element);
-    return !empty($element);
+    return empty($element);
 }
 
 function startswith($haystack, $needle)
