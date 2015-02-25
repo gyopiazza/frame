@@ -22,7 +22,7 @@ return array(
 	// http://codex.wordpress.org/Function_Reference/set_post_thumbnail_size
 	'default_thumbnails' => array(200, 200, true),
 
-	// Generic custom image sizes
+	// Custom image sizes (width, height, crop, label)
 	'full-hd' => array(1920, false, true, __('Full HD (w: 1920, h: auto)', 'theme')), // 1080p (1920x1080)
 	'hd' => array(1280, false, true), // 720p (1280x720)
 	'standard' => array(853, false, true), // 480p (853x480)

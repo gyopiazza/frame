@@ -18,6 +18,9 @@ require_once(locate_template('library/aliases.php'));
 // Load the plugins activation class
 require_once(locate_template('library/plugin-activation.php'));
 
+// Load the theme activation file
+require_once(locate_template('library/theme-activation.php'));
+
 
 //--------------------------------------------------------------------------------------------
 // Automatically load files from folders
@@ -33,7 +36,7 @@ frame_load_files('autoload', true);
 
 
 //--------------------------------------------------------------------------------------------
-// Theme initialisation
+// Theme setup
 //--------------------------------------------------------------------------------------------
 
 function frame_theme_setup()
@@ -87,6 +90,7 @@ function frame_theme_setup()
         }
     }
 
+
     //----------------------------------------------------------------------------------------
     // TinyMCE editor style
     //----------------------------------------------------------------------------------------
@@ -119,13 +123,17 @@ add_action('after_setup_theme', 'frame_theme_setup');
 
 
 //--------------------------------------------------------------------------------------------
-// Flush rules on theme activation
+// Theme activation
 //--------------------------------------------------------------------------------------------
 
 function frame_hook_switch_theme()
 {
-    if (frame_config('application.flush_rewrite_rules'))
-        flush_rewrite_rules(true);
+    // Flush rules
+    flush_rewrite_rules(true);
+
+    // Activation redirect
+    $redirect = frame_config('application.activation_redirect');
+    if (!empty($redirect)) wp_redirect($redirect);
 }
 
 add_action('after_switch_theme', 'frame_hook_switch_theme');
@@ -137,29 +145,70 @@ add_action('after_switch_theme', 'frame_hook_switch_theme');
 
 function frame_assets($enqueue = false)
 {
+    global $wp_styles;
+
     $action = (!empty($enqueue)) ? 'enqueue' : 'register';
     $assets = frame_config('assets');
 
-    if (!empty($assets['javascript']))
-        foreach($assets['javascript'] as $asset)
-            if (substr($asset[0], 0, 1) !== '_' && $action !== 'register')
-                call_user_func_array('wp_'.$action.'_script', $asset);
+    // d(frame_location());
+    // wp_register_style( 'my-theme-ie', get_stylesheet_directory_uri() . "/css/ie.css");
+    // $wp_styles->add_data( 'my-theme-ie', 'conditional', 'IE' );
+    // wp_enqueue_style( 'my-theme-ie');
 
+    // CSS
     if (!empty($assets['css']))
-        foreach($assets['css'] as $asset)
-            if (substr($asset[0], 0, 1) !== '_' && $action !== 'register')
-                call_user_func_array('wp_'.$action.'_style', $asset);
+    {
+        foreach($assets['css'] as $key => $asset)
+        {
+            $is_conditional = substr($key, 0, 2) === 'if';
 
+            if ( is_numeric($key) || (is_string($key) && frame_location($key) || $is_conditional) )
+                if (substr($asset[0], 0, 1) !== '_' && $action !== 'register')
+                    call_user_func_array('wp_'.$action.'_style', frame_asset_version($asset));
+
+            // Wrap the style into IE conditional comments if set
+            if ($is_conditional && $action === 'enqueue')
+            {
+                $key = trim(str_replace('if', '', $key));
+                $wp_styles->add_data($asset[0], 'conditional', $key);
+            }
+        }
+    }
+
+    // Javascript
+    if (!empty($assets['javascript']))
+        foreach($assets['javascript'] as $key => $asset)
+            if ( is_numeric($key) || (is_string($key) && frame_location($key)) )
+                if (substr($asset[0], 0, 1) !== '_' && $action !== 'register')
+                    call_user_func_array('wp_'.$action.'_script', $asset);
+
+    // Javascript data
     if (!empty($assets['javascript_data']))
-        foreach($assets['javascript_data'] as $asset)
-            call_user_func_array('wp_localize_script', $asset);
+        foreach($assets['javascript_data'] as $key => $asset)
+            if ( is_numeric($key) || (is_string($key) && frame_location($key)) )
+                call_user_func_array('wp_localize_script', $asset);
 
     // Load the comment reply script on singular posts with open comments if threaded comments are supported.
-    if ($enqueue === true && is_singular() && get_option('thread_comments') && comments_open())
+    if ($action === 'enqueue' && is_singular() && get_option('thread_comments') && comments_open() && frame_config('application.comments_trackbacks_support'))
         wp_enqueue_script('comment-reply');
+
+
+    // if ($action == 'enqueue')
+    // {
+        // CSS
+        // wp_enqueue_style('my-theme-ie', get_stylesheet_directory_uri().'/css/ie.css', array('theme'));
+        // $wp_styles->add_data('my-theme-ie', 'conditional', 'IE');
+
+        // Javascript
+        // wp_enqueue_script('my-theme-ie', get_stylesheet_directory_uri() . "/js/ie.js");
+        // $wp_scripts->add_data('my-theme-ie', 'conditional', 'IE');
+        // wp_enqueue_script( 'jsFileIdentifier', get_stylesheet_directory_uri() . "/js/ie.js",  array('theme-scripts'));
+        // $wp_scripts->add_data( 'jsFileIdentifier', 'conditional', 'lt IE 9' );
+    // }
 }
 
 add_action('init', 'frame_assets');
+
 
 function frame_enqueue_assets()
 {
@@ -170,22 +219,76 @@ function frame_enqueue_assets()
 add_action('wp_enqueue_scripts', 'frame_enqueue_assets');
 
 
-//--------------------------------------------------------------------------------------------
-// Activation redirect
-//--------------------------------------------------------------------------------------------
-
-
-function frame_activation_redirect()
+function frame_asset_version($asset)
 {
-    $redirect = frame_config('application.activation_redirect');
-    if (!empty($redirect)) wp_redirect($redirect);
+    $versioning = frame_config('assets.versioning');
+
+    // Override the version only if not specifically set in the asset
+    // if (isset($asset[3]) && ($asset[3] !== null || $asset[3] !== false))
+    // if (isset($asset[3]) && is_string($asset[3]))
+    // {
+    if ($versioning)
+    {
+        $filename_versioning = frame_config('assets.filename_versioning');
+        $version = (is_bool($versioning)) ? frame_config('application.version') : $versioning;
+        if (isset($asset[3]) && is_string($asset[3])) $version = $asset[3];
+        $path = pathinfo($asset[1]);
+
+        if ($version)
+        {
+            if ($filename_versioning === true)
+            {
+                $asset[3] = null;
+                $path['extension'] = remove_query_arg(array('ver'), $path['extension']);
+                $path['filename'] .= '.'.str_replace('.', '', $version);
+
+                // d($path, $version);
+            }
+            else
+            {
+                $path['extension'] = add_query_arg(array('ver' => $version), $path['extension']);
+            }
+
+            $asset[1] = trailingslashit($path['dirname']).$path['filename'].'.'.$path['extension'];
+        }
+
+        // d($path, $asset[1]);
+        d($asset);
+
+        // $path = trailingslashit(dirname($asset[1]));
+        // $url = explode('/', $asset[1]);
+        // $filename = $filename[count($filename)-1];
+        // $filename = explode('.', $url[count($url)-1]);
+
+        // array_splice($filename, 1, 0, '213');
+
+        // $filename = parse_url($asset[1], PHP_URL_PATH);
+        // $filename = explode('&', $filename);
+
+        // d(pathinfo($asset[1]), 'pathinfo');
+        // d($url, 'url');
+        // d($filename, $asset[1]);
+    }
+
+    return $asset;
 }
 
-add_action('after_switch_theme', 'frame_activation_redirect');
+// add_action('wp_print_styles', 'frame_asset_version');
+
+
+function switch_stylesheet_src( $src, $handle ) {
+
+    d($src, $handle);
+
+    // if( 'colors' == $handle )
+    //     $src = plugins_url( 'my-colors.css', __FILE__ );
+    return $src;
+}
+// add_filter( 'style_loader_src', 'switch_stylesheet_src', 10, 2 );
 
 
 //--------------------------------------------------------------------------------------------
-// Show custom image sizes in the dropdown when inserting media
+// Show the custom image size labels in the dropdown when inserting media
 //--------------------------------------------------------------------------------------------
 
 function frame_show_image_sizes($sizes)
@@ -309,7 +412,7 @@ if (!empty(frame_config('editor.style_formats')))
 
 function frame_hook_mime_types($wp_mime_types)
 {
-    $mime_types = frame_config('application.mime_types');
+    $mime_types = frame_config('admin.mime_types');
     // $mime_types['applescript'] = 'application/x-applescript'; //Adding applescript extension
     // $mime_types['avi'] = 'video/avi'; //Adding avi extension
     // unset($mime_types['pdf']); //Removing the pdf extension
@@ -386,9 +489,9 @@ add_filter('admin_footer_text', 'frame_admin_footer');
 // Remove comments and trackbacks support for specific post types
 //--------------------------------------------------------------------------------------------
 
-function frame_remove_comments_support()
+function frame_comments_trackbacks_support()
 {
-    $disabled_post_types = frame_config('application.remove_comments_support');
+    $disabled_post_types = frame_config('application.comments_trackbacks_support');
 
     if (!empty($disabled_post_types))
     {
@@ -396,16 +499,38 @@ function frame_remove_comments_support()
 
         foreach ($post_types as $post_type)
         {
-            if (in_array($post_type, $disabled_post_types) && post_type_supports($post_type, 'comments'))
+            if ( (is_array($disabled_post_types) && in_array($post_type, $disabled_post_types) && post_type_supports($post_type, 'comments')) || $disabled_post_types === true )
             {
                 remove_post_type_support($post_type, 'comments');
                 remove_post_type_support($post_type, 'trackbacks');
             }
         }
+
+        if (is_admin_bar_showing() && $disabled_post_types === true)
+        {
+            // Remove comments links from admin bar
+            remove_action('admin_bar_menu', 'wp_admin_bar_comments_menu', 50); // WP<3.3
+            remove_action('admin_bar_menu', 'wp_admin_bar_comments_menu', 60); // WP 3.3
+            if (is_multisite()) add_action('admin_bar_menu', 'frame_remove_network_comment_links', 500);
+        }
     }
 }
 
-add_action('admin_init', 'frame_remove_comments_support');
+add_action('admin_init', 'frame_comments_trackbacks_support');
+
+function frame_remove_network_comment_links($wp_admin_bar)
+{
+    if ($this->networkactive)
+    {
+        foreach( (array) $wp_admin_bar->user->blogs as $blog )
+            $wp_admin_bar->remove_menu( 'blog-'.$blog->userblog_id.'-c');
+    }
+    else
+    {
+        // We have no way to know whether the plugin is active on other sites, so only remove this one
+        $wp_admin_bar->remove_menu( 'blog-'.get_current_blog_id().'-c');
+    }
+}
 
 
 //--------------------------------------------------------------------------------------------

@@ -31,7 +31,7 @@ return array(
 	// - Set a bool true/false to control the bar for all users.
 	// - Set an array of user roles to enable the bar only for those.
 	// ---------------------------------------------------------------
-	'admin_bar' => true,
+	'admin_bar' => false,
 
 
 	// ---------------------------------------------------------------
@@ -68,6 +68,16 @@ return array(
 	// Remove fields from the user profile
 	// ---------------------------------------------------------------
 	// 'remove_profile_fields' => true,
+
+    // ---------------------------------------------------------------
+    // Add custom mime types to be uploaded in the media library
+    // 'file extension' => 'mime type'
+    // 'ext1|ext2' => 'mime type'
+    // ---------------------------------------------------------------
+    'mime_types' => array(
+        'applescript|scpt' => 'application/x-applescript',
+        'dmg' => 'application/x-apple-diskimage'
+    ),
 );
 
 

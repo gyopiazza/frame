@@ -34,22 +34,9 @@ return array(
 
 	// ---------------------------------------------------------------
 	// An array of post types on which to disable comments/trackbacks
+    // bool|array: If false, the comments are disabled everywhere
 	// ---------------------------------------------------------------
-	'remove_comments_support' => array(),
-
-
-    // ---------------------------------------------------------------
-    // An array (extension => mime) of additional allowed mime types
-    // ---------------------------------------------------------------
-    'mime_types' => array(
-        // 'applescript' => 'application/x-applescript'
-    ),
-
-
-    // ---------------------------------------------------------------
-    // Flush rewrite rules on theme activation
-    // ---------------------------------------------------------------
-    'flush_rewrite_rules' => true,
+	'comments_trackbacks_support' => true,
 
 
     // ---------------------------------------------------------------
@@ -64,4 +51,12 @@ return array(
     // 'activation' => 'some_activation_function_name',
     // 'deactivation' => 'some_deactivation_function_name',
 
+
+    // ---------------------------------------------------------------
+    // CRON tasks
+    // recurrence, hook, args...
+    // ---------------------------------------------------------------
+    'cron' => array(
+        array('task-name', 'some_function_name'),
+    ),
 );

@@ -190,24 +190,38 @@ function frame_segments($index = null)
     // build $segments on first function call
     if ($segments === null)
     {
-        global $wp;
+        // global $wp;
 
-        if (!empty($wp->request))
-            $current_url = add_query_arg($wp->query_string, '', home_url($wp->request));
-        else
-            $current_url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+        // if (!empty($wp->request))
+            // $current_url = add_query_arg($wp->query_string, '', home_url($wp->request));
+        // else
+            // $current_url = home_url(add_query_arg(NULL, NULL));
+            // $current_url = $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+            // $current_url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-        $current_url = str_replace(MY_URL, '', $current_url);
-        $segments = esc_url(parse_url($current_url, PHP_URL_PATH));
-        $segments = explode('/', $segments);
+        // d(home_url(add_query_arg(array(),$wp->request)), 'xxx');
+
+        $current_url = frame_url();
+
+        // d(home_url());
+        // d($current_url, 'before');
+
+        // Strip the base url
+        $current_url = str_replace(home_url(), '', $current_url);
+        // Trim the leading/trailing slashes
+        $current_url = trim($current_url, '/');
+        // Create the segments array
+        // $segments = esc_url(parse_url($current_url, PHP_URL_PATH));
+        $segments = explode('/', $current_url);
 
         foreach($segments as $key => $val)
             if(empty($val))
                 unset($segments[$key]);
 
-        $segments = array_filter($segments);
-        $segments = array_values($segments);
+        // $segments = array_filter($segments);
+        // $segments = array_values($segments);
 
+        // TODO: Add Polylang support
         $locale = (defined('ICL_LANGUAGE_CODE')) ? ICL_LANGUAGE_CODE : 'en';
         if (isset($segments[0]) && $segments[0] == $locale) unset($segments[0]);
     }
@@ -215,7 +229,7 @@ function frame_segments($index = null)
     // if no $index was requested, emulate REQUEST_URI
     if ($index === null)
     {
-        return '/' . implode('/', $segments);
+        return implode('/', $segments);
     }
 
     // return the segment index if valid, otherwise null
@@ -277,11 +291,17 @@ function frame_location($params = null)
 
     //////////////////////
 
+
+    // Gather current location values
+
     $admin      = is_admin(); // Are we in the admin area?
     $frontend   = !$admin; // Are we in the frontend area?
+    $url        = frame_url(); // The current URL
+    $segments   = (!empty($params['segments']) && frame_segments() != $params['segments']) ? false : frame_segments(); // The URI segments to match
     $file       = basename($_SERVER['SCRIPT_NAME']); // The current filename (in the frontend it's always 'index.php')
-    $page       = isset($_REQUEST['page']) ? sanitize_key($_REQUEST['page']) : null; // The current page number (used when paginating results)
     $post_type  = null; // The current post type
+    $post_id    = (isset($post->ID)) ? $post->ID : null; // The current post id
+    $page       = isset($_REQUEST['page']) ? sanitize_key($_REQUEST['page']) : null; // The current page number (used when paginating results)
     $action     = isset($_GET['action']) ? sanitize_key($_GET['action']) : null; // Used in the admin
     $ajax       = (!defined('DOING_AJAX') || DOING_AJAX === false) ? false : true; // Are doing an ajax request?
     $saving     = (!empty($_POST)) ? true : false; // Are we sending post data? (maybe change this...)
@@ -314,9 +334,12 @@ function frame_location($params = null)
     $location = array(
         'admin'         => $admin,
         'frontend'      => $frontend,
+        'url'           => $url,
+        'segments'      => $segments,
         'file'          => $file,
-        'page'          => $page,
         'post_type'     => $post_type,
+        'post_id'       => $post_id,
+        'page'          => $page,
         'action'        => $action,
         'ajax'          => $ajax,
         'saving'        => $saving
@@ -345,6 +368,7 @@ function frame_location($params = null)
     {
         foreach ($params as $key => $val)
         {
+            // d($val, $key);
             // if (array_key_exists($key, $location) && $location[$key] !== $val)
             //  return false;
 
@@ -369,7 +393,7 @@ function frame_location($params = null)
     }
     // Return one element from the $location array
     // Example: frame_location('param'); // Returns 'param' from $location
-    else if (is_string($params))
+    else if (is_string($params) || is_numeric($params))
     {
         return (isset($location[$params])) ? $location[$params] : null;
     }
@@ -382,6 +406,25 @@ function frame_location($params = null)
 
     // global $current_screen;
     // d($current_screen, 'current_screen');
+}
+
+
+/**
+ * Return the current URL
+ *
+ * @return string The current URL string
+ */
+function frame_url()
+{
+    static $url;
+
+    if ($url === null)
+    {
+        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+        $url = $protocol.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+    }
+
+    return $url;
 }
 
 
@@ -417,7 +460,6 @@ function frame_user_role($role, $user_id = null)
  * @param string|array The post type(s)
  * @return int The posts count
  */
-
 function frame_count_posts_by_author($user_id, $post_type = array('post', 'page'))
 {
     $args = array(
@@ -544,25 +586,14 @@ function frame_share($provider, $post_id = null)
 
 
 
-/**
- * IE conditional comments
- *
- */
-
-function frame_ie_conditional_comments()
-{
-
-}
-
-
-
 //--------------------------------------------------------------------------------------------
 // Maybe...
 //--------------------------------------------------------------------------------------------
 
+// Recursively remove array duplicates
 function removeArrayDuplicates($array)
 {
-    $input = array_map('unserialize', array_unique(array_map('serialize'), $input)));
+    return array_map('unserialize', array_unique(array_map('serialize'), $array));
 }
 
 function is_empty($element)

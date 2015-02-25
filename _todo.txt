@@ -8,17 +8,17 @@ Useful links:
 - https://github.com/justintadlock/get-the-image
 - https://github.com/UpTrendingLLC/WP-Scaffolding
 
-IMPORTANT: Include grunt-newer in the tasks
 
-Reorganize files/folder... maybe move everything inside a "frame" folder?
+--------------------------------------
+
+
+PRIO A
+
+IMPORTANT: Include grunt-newer in the tasks
 
 Add 'environments' to the config files to load different files depending on the environment (especially useful for assets dev/live)
 
 Add 'social sharing' links helper (from pins), also launch them in a popup (magnific popup)
-
-Add gruntfile and prepare for SASS (check skyline.is and inuit)
-
-Add 'theme activation' page from roots (https://github.com/roots/roots/tree/master/lib)
 
 Add automatic styleguide generator
 
@@ -33,6 +33,13 @@ Implement – somehow – the rewrite rules from pins
 
 Fix admin_bar_logo
 
+
+--------------------------------------
+
+
+PRIO B
+
+Reorganize files/folder... maybe move everything inside a "frame" folder?
 Separate 'helpers' into api and helpers (?)
 
 Add some plugins for development (duplicate post, regenerate thumbnails, cache, auto optimize, debug bar...)
@@ -49,3 +56,18 @@ Add support for Polylang in helpers/frame_segments
 Add cron config (?)
 
 Rename all the hook functions to 'frame_hook_function_name'
+
+Set application.version to the theme version by default, fetched from style.css
+$my_theme = wp_get_theme(); $version = str_replace('.','_',$my_theme->get( 'Version' ));
+
+
+--------------------------------------
+
+
+TO CHECK:
+
+Check if application.comments_trackbacks_support works properly
+
+Test/Modify 'theme activation' page from roots (https://github.com/roots/roots/tree/master/lib)
+
+Add gruntfile and prepare for SASS (check skyline.is and inuit)
