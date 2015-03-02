@@ -30,7 +30,7 @@ return array(
     // It requires some rewrite rules to work.
     // @link http://wordpress.stackexchange.com/a/143520/16929
     // ---------------------------------------------------------------
-    'filename_versioning' => true,
+    'filename_versioning' => false,
 
 
 	// ---------------------------------------------------------------
@@ -40,11 +40,11 @@ return array(
         array('theme', get_template_directory_uri().'/assets/css/main.css', array(), null, 'all'),
 
         // Conditional loading test
-        'post_id=2' => array('theme-conditional-loading', get_template_directory_uri().'/assets/css/main-conditional.css', array(), null, 'all'),
+        // 'post_id=2' => array('theme-conditional-loading', get_template_directory_uri().'/assets/css/main-conditional.css', array(), null, 'all'),
 
         // Conditional IE loading
         // Examples: if IE, if !IE, if IE 8, if lt IE 8, if lte IE 9, if gt IE 9, if gte IE 8
-        'if IE' => array('theme-conditional-ie-loading', get_template_directory_uri().'/assets/css/main-ie-conditional.css', array(), '1.0', 'all'),
+        // 'if IE' => array('theme-conditional-ie-loading', get_template_directory_uri().'/assets/css/main-ie-conditional.css', array(), '1.0', 'all'),
 	),
 
 

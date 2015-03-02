@@ -27,10 +27,10 @@ return array(
 	// ---------------------------------------------------------------
 
 	// 16x16 or 32x32 ico file
-	'favicon' => get_stylesheet_directory_uri().'/assets/img/favicon.ico',
+	// 'favicon' => get_stylesheet_directory_uri().'/assets/img/favicon.ico',
 
 	// 180x180 png file
-	'favicon_retina' => get_stylesheet_directory_uri().'/assets/img/favicon.png',
+	// 'favicon_retina' => get_stylesheet_directory_uri().'/assets/img/favicon.png',
 
 
 	// ---------------------------------------------------------------

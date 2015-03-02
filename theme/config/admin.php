@@ -31,14 +31,14 @@ return array(
 	// - Set a bool true/false to control the bar for all users.
 	// - Set an array of user roles to enable the bar only for those.
 	// ---------------------------------------------------------------
-	'admin_bar' => false,
+	'admin_bar' => true,
 
 
 	// ---------------------------------------------------------------
 	// Custom admin logos
 	// ---------------------------------------------------------------
-	'admin_login_logo' => get_stylesheet_directory_uri().'/assets/img/admin-login-logo.png',
-	'admin_bar_logo' => get_stylesheet_directory_uri().'/assets/img/admin-bar-logo.png',
+	// 'admin_login_logo' => get_stylesheet_directory_uri().'/assets/img/admin-login-logo.png',
+	// 'admin_bar_logo' => get_stylesheet_directory_uri().'/assets/img/admin-bar-logo.png',
 
 
 	// ---------------------------------------------------------------
@@ -74,10 +74,10 @@ return array(
     // 'file extension' => 'mime type'
     // 'ext1|ext2' => 'mime type'
     // ---------------------------------------------------------------
-    'mime_types' => array(
-        'applescript|scpt' => 'application/x-applescript',
-        'dmg' => 'application/x-apple-diskimage'
-    ),
+    // 'mime_types' => array(
+    //     'applescript|scpt' => 'application/x-applescript',
+    //     'dmg' => 'application/x-apple-diskimage'
+    // ),
 );
 
 

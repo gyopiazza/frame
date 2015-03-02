@@ -19,7 +19,7 @@ require_once(locate_template('library/aliases.php'));
 require_once(locate_template('library/plugin-activation.php'));
 
 // Load the theme activation file
-require_once(locate_template('library/theme-activation.php'));
+// require_once(locate_template('library/theme-activation.php'));
 
 
 //--------------------------------------------------------------------------------------------
@@ -438,9 +438,7 @@ add_filter('upload_mimes', 'frame_hook_mime_types', 1, 1);
 
 $admin_bar = frame_config('admin.admin_bar');
 
-if ($admin_bar === false)
-    add_filter('show_admin_bar', '__return_false');
-else if (is_array($admin_bar) && !frame_user_role($admin_bar))
+if ($admin_bar === false || (is_array($admin_bar) && !frame_user_role($admin_bar)))
     add_filter('show_admin_bar', '__return_false');
 
 
@@ -525,7 +523,9 @@ add_action('admin_init', 'frame_comments_trackbacks_support');
 
 function frame_remove_network_comment_links($wp_admin_bar)
 {
-    if ($this->networkactive)
+    $networkactive = ( is_multisite() && array_key_exists( plugin_basename( __FILE__ ), (array) get_site_option( 'active_sitewide_plugins' ) ) );
+
+    if ($networkactive)
     {
         foreach( (array) $wp_admin_bar->user->blogs as $blog )
             $wp_admin_bar->remove_menu( 'blog-'.$blog->userblog_id.'-c');
