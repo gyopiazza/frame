@@ -15,5 +15,9 @@ module.exports = {
 
     all: {
       src: ['<%= config.tests %>**/*.js']
+    },
+
+    one: {
+      src: ['<%= config.tests %><%= test.file %>.js']
     }
 };

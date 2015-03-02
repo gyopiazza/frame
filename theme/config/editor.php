@@ -19,6 +19,11 @@ return array(
 		array('title' => '.someclass', 'block' => 'div', 'classes' => 'someclass', 'wrapper' => true),
 	),
 
+    // Add buttons to the toolbar
+    // Available: formatselect, underline, alignjustify, forecolor, pastetext,
+    // removeformat, charmap, outdent, indent, undo, redo, wp_help
+    'add_buttons' => array('formatselect'),
+
 	// Remove buttons from the toolbar
 	// Available: formatselect, underline, alignjustify, forecolor, pastetext,
     // removeformat, charmap, outdent, indent, undo, redo, wp_help

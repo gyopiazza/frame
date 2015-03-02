@@ -240,7 +240,7 @@ function frame_asset_version($asset)
             {
                 $asset[3] = null;
                 $path['extension'] = remove_query_arg(array('ver'), $path['extension']);
-                $path['filename'] .= '.'.str_replace('.', '', $version);
+                $path['filename'] .= '.'.str_replace('.', '_', $version);
 
                 // d($path, $version);
             }
@@ -253,7 +253,7 @@ function frame_asset_version($asset)
         }
 
         // d($path, $asset[1]);
-        d($asset);
+        // d($asset);
 
         // $path = trailingslashit(dirname($asset[1]));
         // $url = explode('/', $asset[1]);
@@ -382,7 +382,12 @@ add_action('admin_init', 'frame_no_admin_access', 100);
 
 function frame_mce_buttons_2($buttons)
 {
+    $add_buttons = frame_config('editor.add_buttons');
     $remove_buttons = frame_config('editor.remove_buttons');
+
+    if (!empty($add_buttons))
+        foreach ($add_buttons as $button)
+            $buttons[] = $button;
 
     if (!empty($remove_buttons))
         $buttons = array_diff($buttons, $remove_buttons);

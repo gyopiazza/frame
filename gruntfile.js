@@ -78,18 +78,18 @@ module.exports = function(grunt) {
     // Run the tests
     // grunt.registerTask('test', ['dalek']);
 
-    grunt.registerTask('test', 'Run the tests', function(arg1) {
+    // grunt.registerTask('test', 'Run the tests', function(arg1) {
 
-      if (arguments.length === 0) {
-        // grunt.log.writeln(this.name + ", no args");
-        grunt.task.run(['dalek']);
-      } else {
-        // grunt.log.writeln(this.name + ", " + arg1 + " | " + arg2);
-        grunt.task.run('dalek:'+arg1);
-      }
+    //   if (arguments.length === 0) {
+    //     // grunt.log.writeln(this.name + ", no args");
+    //     grunt.task.run(['dalek']);
+    //   } else {
+    //     // grunt.log.writeln(this.name + ", " + arg1 + " | " + arg2);
+    //     grunt.task.run('dalek:'+arg1);
+    //   }
 
-      // grunt.log.writeln('The task was OK!');
-    });
+    //   // grunt.log.writeln('The task was OK!');
+    // });
 
 
     //////////////////////////////////////////////////////////////

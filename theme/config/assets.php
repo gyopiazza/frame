@@ -21,7 +21,6 @@ return array(
     // Enable asset files versioning
     // @param bool: Enable/disable the feature, if 'true' the application.version is used
     // @param string|int: The value to be used instead of the application.version
-    // @link http://wordpress.stackexchange.com/a/143520/16929
     // ---------------------------------------------------------------
     'versioning' => true,
 

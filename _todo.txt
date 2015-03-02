@@ -33,6 +33,10 @@ Implement – somehow – the rewrite rules from pins
 
 Fix admin_bar_logo
 
+Change config.menus to support location (make an array of id and label)
+
+Add custom pointers (help tooltips)
+http://wpsnipp.com/index.php/functions-php/add-custom-pointers-in-themes-and-plugins/
 
 --------------------------------------
 
@@ -60,6 +64,9 @@ Rename all the hook functions to 'frame_hook_function_name'
 Set application.version to the theme version by default, fetched from style.css
 $my_theme = wp_get_theme(); $version = str_replace('.','_',$my_theme->get( 'Version' ));
 
+Add: Restricting users to view only media library items they upload
+http://wpsnipp.com/index.php/functions-php/restricting-users-to-view-only-media-library-items-they-upload/
+
 
 --------------------------------------
 
@@ -71,3 +78,5 @@ Check if application.comments_trackbacks_support works properly
 Test/Modify 'theme activation' page from roots (https://github.com/roots/roots/tree/master/lib)
 
 Add gruntfile and prepare for SASS (check skyline.is and inuit)
+
+Test editor.add_buttons

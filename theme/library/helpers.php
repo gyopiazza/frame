@@ -296,6 +296,7 @@ function frame_location($params = null)
 
     $admin      = is_admin(); // Are we in the admin area?
     $frontend   = !$admin; // Are we in the frontend area?
+    $logged_in  = is_user_logged_in(); // Is the current user logged in?
     $url        = frame_url(); // The current URL
     $segments   = (!empty($params['segments']) && frame_segments() != $params['segments']) ? false : frame_segments(); // The URI segments to match
     $file       = basename($_SERVER['SCRIPT_NAME']); // The current filename (in the frontend it's always 'index.php')
@@ -334,6 +335,7 @@ function frame_location($params = null)
     $location = array(
         'admin'         => $admin,
         'frontend'      => $frontend,
+        'logged_in'     => $logged_in,
         'url'           => $url,
         'segments'      => $segments,
         'file'          => $file,

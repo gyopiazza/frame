@@ -17,6 +17,7 @@ return array(
 
 	// ---------------------------------------------------------------
 	// Set the current environment, useful for specific optimizations
+    // Not currently in use
 	// ---------------------------------------------------------------
 	'environment' => 'development',
 
