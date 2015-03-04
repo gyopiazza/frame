@@ -38,6 +38,10 @@ Change config.menus to support location (make an array of id and label)
 Add custom pointers (help tooltips)
 http://wpsnipp.com/index.php/functions-php/add-custom-pointers-in-themes-and-plugins/
 
+Add ‘deregister_jquery’ to config.assets or overwrite the ‘jquery’ handle: wp_deregister_script('jquery');
+
+
+
 --------------------------------------
 
 
@@ -66,6 +70,14 @@ $my_theme = wp_get_theme(); $version = str_replace('.','_',$my_theme->get( 'Vers
 
 Add: Restricting users to view only media library items they upload
 http://wpsnipp.com/index.php/functions-php/restricting-users-to-view-only-media-library-items-they-upload/
+
+Add theme automatic updates:
+http://code.tutsplus.com/tutorials/create-a-license-controlled-theme-and-plugin-update-system-part-1-the-license-manager-plugin--cms-22621
+
+Implement some snippets from: https://github.com/roots/roots-snippets
+
+Change ‘vendor’ folders to ‘libs’ (as in HTML5Boilerplate)
+Put the SASS files into css/source (as for ‘js’)
 
 
 --------------------------------------

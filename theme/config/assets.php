@@ -37,14 +37,14 @@ return array(
 	// CSS files to register and enqueue in the frontend
 	// ---------------------------------------------------------------
 	'css' => array(
-        array('theme', get_template_directory_uri().'/assets/css/main.css', array(), null, 'all'),
+        array('theme', get_stylesheet_directory_uri().'/assets/css/main.css', array(), null, 'all'),
 
         // Conditional loading test
-        // 'post_id=2' => array('theme-conditional-loading', get_template_directory_uri().'/assets/css/main-conditional.css', array(), null, 'all'),
+        // 'post_id=2' => array('theme-conditional-loading', get_stylesheet_directory_uri().'/assets/css/main-conditional.css', array(), null, 'all'),
 
         // Conditional IE loading
         // Examples: if IE, if !IE, if IE 8, if lt IE 8, if lte IE 9, if gt IE 9, if gte IE 8
-        // 'if IE' => array('theme-conditional-ie-loading', get_template_directory_uri().'/assets/css/main-ie-conditional.css', array(), '1.0', 'all'),
+        // 'if IE' => array('theme-conditional-ie-loading', get_stylesheet_directory_uri().'/assets/css/main-ie-conditional.css', array(), '1.0', 'all'),
 	),
 
 
@@ -52,7 +52,7 @@ return array(
 	// CSS files to load for the TinyMCE editor in the admin
 	// ---------------------------------------------------------------
 	'editor_styles' => array(
-		// get_template_directory_uri() . '/assets/css/editor-styles.css'
+		// get_stylesheet_directory_uri() . '/assets/css/editor-styles.css'
 	),
 
 
@@ -60,8 +60,8 @@ return array(
     // Javascript files to register and enqueue in the frontend
     // ---------------------------------------------------------------
     'javascript' => array(
-        // array('theme-plugins', get_template_directory_uri() . '/assets/js/plugins.min.js', array('jquery'), '1.0.0', true),
-        // array('theme-scripts', get_template_directory_uri().'/assets/js/main.js', array('jquery'), '1.0.0', true),
+        // array('theme-plugins', get_stylesheet_directory_uri() . '/assets/js/plugins.min.js', array('jquery'), '1.0.0', true),
+        // array('theme-scripts', get_stylesheet_directory_uri().'/assets/js/main.js', array('jquery'), '1.0.0', true),
     ),
 
 

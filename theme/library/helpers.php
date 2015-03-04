@@ -431,6 +431,19 @@ function frame_url()
 
 
 /**
+ * Return the current theme (parent or child) URL with optional path
+ * Basicallt wrapper for the get_stylesheet_directory_uri() function
+ *
+ * @param string A path that will be appended to the URL
+ * @return string The current theme URL with optional path
+ */
+function frame_theme_url($path = '')
+{
+    return trailingslashit(get_stylesheet_directory_uri()).$path;
+}
+
+
+/**
  * Check if a particular user has one or more roles.
  * Returns true if a match was found.
  *
