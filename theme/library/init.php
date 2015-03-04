@@ -543,7 +543,19 @@ function frame_remove_network_comment_links($wp_admin_bar)
 //--------------------------------------------------------------------------------------------
 
 if (frame_config('application.xmlrpc') === false)
+{
+    // Disable XMLRPC
     add_filter('xmlrpc_enabled', '__return_false');
+
+    // Specifically disable the XMLRPC pingback
+    function frame_hook_remove_xmlrpc_pingback_ping($methods)
+    {
+       unset($methods['pingback.ping']);
+       return $methods;
+    }
+
+    add_filter('xmlrpc_methods', 'frame_hook_remove_xmlrpc_pingback_ping');
+}
 
 
 //--------------------------------------------------------------------------------------------
