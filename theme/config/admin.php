@@ -35,6 +35,12 @@ return array(
 
 
 	// ---------------------------------------------------------------
+    // Enable/Disable admin login CSS
+    // ---------------------------------------------------------------
+    'default_login_css' => false,
+
+
+    // ---------------------------------------------------------------
 	// Custom admin logos
 	// ---------------------------------------------------------------
 	// 'admin_login_logo' => get_stylesheet_directory_uri().'/assets/img/admin-login-logo.png',

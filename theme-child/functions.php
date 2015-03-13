@@ -1,5 +1,13 @@
 <?php
 
+// Check for the existence of wp-frame to prevent PHP errors
+$current_theme = wp_get_theme();
+if (!empty($current_theme->get('Template')))
+{
+    $parent_theme = wp_get_theme($current_theme->get('Template'));
+    if (!$parent_theme->exists()) die('You need wp-frame for this theme to work');
+}
+
 function theme_child_init()
 {
     global $wp_query;

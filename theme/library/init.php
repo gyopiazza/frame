@@ -230,26 +230,34 @@ function frame_asset_version($asset)
     if ($versioning)
     {
         $filename_versioning = frame_config('assets.filename_versioning');
-        $version = (is_bool($versioning)) ? frame_config('application.version') : $versioning;
-        if (isset($asset[3]) && is_string($asset[3])) $version = $asset[3];
-        $path = pathinfo($asset[1]);
+
+        $version = (isset($asset[3])) ? $asset[3] : null;
+
+        if ($version !== false)
+            $version = (is_bool($versioning)) ? frame_config('application.version') : $versioning;
+
+        // $version = (is_bool($versioning)) ? frame_config('application.version') : $versioning;
+        // if (isset($asset[3]) && is_string($asset[3])) $version = $asset[3];
 
         if ($version)
         {
+            $path = pathinfo($asset[1]);
+            $extension = (isset($path['extension'])) ? $path['extension'] : '';
+
             if ($filename_versioning === true)
             {
                 $asset[3] = null;
-                $path['extension'] = remove_query_arg(array('ver'), $path['extension']);
+                $extension = remove_query_arg(array('ver'), $extension);
                 $path['filename'] .= '.'.str_replace('.', '_', $version);
 
                 // d($path, $version);
             }
             else
             {
-                $path['extension'] = add_query_arg(array('ver' => $version), $path['extension']);
+                $extension = add_query_arg(array('ver' => $version), $extension);
             }
 
-            $asset[1] = trailingslashit($path['dirname']).$path['filename'].'.'.$path['extension'];
+            $asset[1] = trailingslashit($path['dirname']).$path['filename'].'.'.$extension;
         }
 
         // d($path, $asset[1]);
@@ -458,6 +466,28 @@ function frame_admin_bar_logo_init()
 }
 
 add_action('admin_head', 'frame_admin_bar_logo_init');
+
+
+
+
+//--------------------------------------------------------------------------------------------
+// Disable admin login CSS
+//--------------------------------------------------------------------------------------------
+
+if (frame_config('admin.default_login_css') === false)
+{
+    function frame_hook_login_remove_scripts()
+    {
+        wp_deregister_style('wp-admin');
+        wp_deregister_style('buttons');
+        wp_deregister_style('open-sans');
+        wp_deregister_style('dashicons');
+        wp_deregister_style('login');
+        wp_register_style('login', array()); // Fix to actually deregister the login css
+    }
+
+    add_action('login_init', 'frame_hook_login_remove_scripts');
+}
 
 
 //--------------------------------------------------------------------------------------------

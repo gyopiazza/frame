@@ -4,10 +4,7 @@
  * Assets
  *
  * Set the static assets to register and enqueue
- * If the asset 'handle' begins with _ it will only be registered
- *
- * Javascript: $handle, $src, $deps, $ver, $in_footer
- * CSS: $handle, $src, $deps, $ver, $media
+ * If the asset 'handle' begins with _ it will only be registered and not enqueued
  *
  * @link http://codex.wordpress.org/Function_Reference/wp_enqueue_script
  * @link http://codex.wordpress.org/Function_Reference/wp_enqueue_style
@@ -35,11 +32,13 @@ return array(
 
 	// ---------------------------------------------------------------
 	// CSS files to register and enqueue in the frontend
+    // Arguments: $handle, $src, $deps, $ver, $media
+    // Note: WP automatically appends '-css' to the handle name
 	// ---------------------------------------------------------------
 	'css' => array(
         array('theme', get_stylesheet_directory_uri().'/assets/css/main.css', array(), null, 'all'),
 
-        // Conditional loading test
+        // Conditional loading
         // 'post_id=2' => array('theme-conditional-loading', get_stylesheet_directory_uri().'/assets/css/main-conditional.css', array(), null, 'all'),
 
         // Conditional IE loading
@@ -58,6 +57,7 @@ return array(
 
     // ---------------------------------------------------------------
     // Javascript files to register and enqueue in the frontend
+    // Arguments: $handle, $src, $deps, $ver, $in_footer
     // ---------------------------------------------------------------
     'javascript' => array(
         // array('theme-plugins', get_stylesheet_directory_uri() . '/assets/js/plugins.min.js', array('jquery'), '1.0.0', true),

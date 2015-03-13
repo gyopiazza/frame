@@ -40,6 +40,7 @@ http://wpsnipp.com/index.php/functions-php/add-custom-pointers-in-themes-and-plu
 
 Add ‘deregister_jquery’ to config.assets or overwrite the ‘jquery’ handle: wp_deregister_script('jquery');
 
+Add Travis CI support: https://github.com/xwp/wp-dev-lib
 
 
 --------------------------------------
@@ -74,10 +75,12 @@ http://wpsnipp.com/index.php/functions-php/restricting-users-to-view-only-media-
 Add theme automatic updates:
 http://code.tutsplus.com/tutorials/create-a-license-controlled-theme-and-plugin-update-system-part-1-the-license-manager-plugin--cms-22621
 
-Implement some snippets from: https://github.com/roots/roots-snippets
-
-Change ‘vendor’ folders to ‘libs’ (as in HTML5Boilerplate)
 Put the SASS files into css/source (as for ‘js’)
+
+Change admin.post_revision config to allow for an array of ['post_type' => X] values:
+http://codex.wordpress.org/Plugin_API/Filter_Reference/wp_revisions_to_keep
+
+Implement some snippets from: https://github.com/roots/roots-snippets (?)
 
 
 --------------------------------------
