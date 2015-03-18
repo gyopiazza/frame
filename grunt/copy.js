@@ -4,7 +4,7 @@ module.exports = {
         expand: true,
         nocase: true,
         cwd: '<%= config.root %>',
-        src: ['**', '!**/sass/**', '!**/source/**', '!**/vendor/**', '!**/_*.*', '!.ds_store', '!thumbs.db'],
+        src: ['**', '!**/sass/**', '!**/source/**', '!**/autoload/**', '!**/_*.*', '!.ds_store', '!thumbs.db'],
         dest: '<%= config.build %><%= package.name %>'
     },
     dev: {

@@ -39,7 +39,7 @@ function frame_debug($var, $label = '', $verbose = false, $stack = false)
 	$debug .= '#'.count($frame_debug_stack).' &mdash; ';
 	$debug .=  date("l jS F \@\ g:i:s.".$micro." a", microtime(true));
 	// if (class_exists('frame_UI')) $debug .= ' &mdash; Called by: ' . frame_UI::get_caller_class();
-	$debug .= ' &mdash; Called by: ' . frame_caller_class();
+	$debug .= ' &mdash; ' . frame_get_caller();
 	if ($stack) $debug .= frame_call_stack(debug_backtrace());
 	// $callers = debug_backtrace();
 	// $debug .= '<pre>'.var_export(debug_backtrace(), true).'</pre>';
@@ -55,7 +55,7 @@ function frame_print_debug()
 {
 	global $frame_debug_stack;
 	foreach ($frame_debug_stack as $debug)
-		echo '<div style="background:#fff;color:#333;border-top:1px solid #333; padding:30px;">'.$debug.'</div>';
+		echo '<div id="frame-debug" style="position:relative;z-index:9999999999999;background:#fff;color:#333;border-top:1px solid #333;padding:30px;">'.$debug.'</div>';
 }
 add_action('admin_footer', 'frame_print_debug');
 add_action('wp_footer', 'frame_print_debug');
@@ -71,19 +71,27 @@ function frame_call_stack($stacktrace)
     }
 
     return $output;
-} 
+}
 
-function frame_caller_class()
+function frame_get_caller()
 {
-    $traces = debug_backtrace();
-    return (isset($traces[2]['class'])) ? $traces[2]['class'] : null;
+    $trace = debug_backtrace();
+    $caller = $trace[1];
+    $output = '';
+
+    $output = "Called by {$caller['function']}";
+
+    if (isset($caller['class']))
+        $output .= " in {$caller['class']}";
+
+    return $output;
 }
 
 function frame_log($msg = '')
-{ 
+{
 	// Stop execution if not in debug mode
 	// if (defined('frame_DEBUG') && frame_DEBUG === false) return;
-	
+
 	if (is_array($msg) || is_object($msg)) $msg = var_export($msg, true) . "\n" . '--------------------';
 
     // open file

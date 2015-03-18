@@ -35,7 +35,7 @@ return array(
 
 
 	// ---------------------------------------------------------------
-    // Enable/Disable admin login CSS
+    // Enable/Disable the default admin login CSS (wp-login.php)
     // ---------------------------------------------------------------
     'default_login_css' => false,
 

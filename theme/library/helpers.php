@@ -364,7 +364,7 @@ function frame_location($params = null)
     //////////////////////
 
 
-    // Compare the $location array with the passed $params
+    // Compare the $location array with the given $params
     // Example: frame_location(array('param' => 'value')); // Return bool
     if (is_array($params))
     {
@@ -373,6 +373,15 @@ function frame_location($params = null)
             // d($val, $key);
             // if (array_key_exists($key, $location) && $location[$key] !== $val)
             //  return false;
+
+            // TODO: Maybe change to...
+            // $location = frame_location_item($key, $val);
+            // if ( (is_array($val) && !in_array($location, $val)) || $location != $val )
+            //     return false;
+
+            // if (!frame_location_check($key, $val))
+            //     return false;
+
 
             if (array_key_exists($key, $location))
             {
@@ -408,6 +417,160 @@ function frame_location($params = null)
 
     // global $current_screen;
     // d($current_screen, 'current_screen');
+}
+
+
+/**
+ * Check single location items
+ *
+ * @return string The current URL string
+ */
+function frame_location_item($key = null, $val = null)
+{
+    global $post, $pagenow, $typenow, $current_screen;
+    $key = strtolower($key);
+
+    // Fetch the requested info
+    // TODO: Maybe change to foreach through the location_items
+    // if (in_array($key, $location_items) || $key === null)
+
+    switch ($key)
+    {
+        // Are we in the admin area?
+        case 'admin':
+            return is_admin();
+        break;
+
+        // -----------
+
+        // Are we in the frontend area?
+        case 'frontend':
+            return !is_admin();
+        break;
+
+        // -----------
+
+        // Is the current user logged in?
+        case 'logged_in':
+            return is_user_logged_in();
+        break;
+
+        // -----------
+
+        // The current URL
+        case 'url':
+            return frame_url();
+        break;
+
+        // -----------
+
+        // The URI segments to match
+        case 'segments':
+            return frame_segments();
+        break;
+
+        // -----------
+
+        // The current filename (in the frontend it's always 'index.php')
+        case 'file':
+            return basename($_SERVER['SCRIPT_NAME']);
+        break;
+
+        // -----------
+
+        // The current post type
+        case 'post_type':
+            $admin = is_admin();
+            $post_type  = null;
+
+            // Get type from post object
+            if ($post && $post->post_type)
+                $post_type = $post->post_type;
+            // Check $typenow object
+            else if ($typenow)
+                $post_type = $typenow;
+            // Check $current_screen object
+            else if ($current_screen && $current_screen->post_type)
+                $post_type = $current_screen->post_type;
+            // Pages and custom post types
+            else if (isset($_REQUEST['post_type']) && $admin)
+                $post_type = sanitize_key($_REQUEST['post_type']);
+            // Standard posts
+            else if ($file == 'edit.php' && !isset($_REQUEST['post_type']) && $admin)
+                $post_type = 'post';
+            // Attachments
+            else if ($file == 'upload.php' && !isset($_REQUEST['post_type']) && $admin)
+                $post_type = 'attachment';
+            // Inside edit screens get the post type from the post ID
+            else if ($file == 'post.php' && isset($_REQUEST['post']) && !isset($_REQUEST['post_type']) && $admin)
+                $post_type = get_post_type(sanitize_key($_REQUEST['post']));
+
+            return $post_type;
+        break;
+
+        // -----------
+
+        // The current post id
+        case 'post_id':
+            return (isset($post->ID)) ? $post->ID : null;
+        break;
+
+        // -----------
+
+        // The current page number (used when paginating results)
+        case 'page':
+            return isset($_REQUEST['page']) ? sanitize_key($_REQUEST['page']) : null;
+        break;
+
+        // -----------
+
+        // Used in the admin
+        case 'action':
+            return isset($_GET['action']) ? sanitize_key($_GET['action']) : null;
+        break;
+
+        // -----------
+
+        // Are doing an ajax request?
+        case 'ajax':
+            return (!defined('DOING_AJAX') || DOING_AJAX === false) ? false : true;
+        break;
+
+        // -----------
+
+        // Are we sending post data? (maybe change this...)
+        case 'saving':
+            return (!empty($_POST)) ? true : false;
+        break;
+
+        // -----------
+
+        // If nothing is requested, return the whole location array
+        default:
+            // The avaiable location items
+            $location_items = array(
+                'admin',
+                'frontend',
+                'logged_in',
+                'url',
+                'segments',
+                'file',
+                'post_type',
+                'post_id',
+                'page',
+                'action',
+                'ajax',
+                'saving'
+            );
+
+            $location = array();
+
+            foreach($location_items as $item)
+                $location[$item] = frame_location_item($item);
+
+            return $location;
+        break;
+    }
 }
 
 

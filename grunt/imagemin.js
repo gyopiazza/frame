@@ -10,7 +10,7 @@ module.exports = {
             expand: true,
             cwd: '<%= config.root %><%= config.img %>',
             src: ['**/*.{png,jpg,gif}'],
-            dest: '<%= config.build %><%= config.img %>'
+            dest: '<%= config.build %><%= package.name %>/<%= config.img %>'
         }]
     }
 };

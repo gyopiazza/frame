@@ -126,7 +126,7 @@ add_action('after_setup_theme', 'frame_theme_setup');
 // Theme activation
 //--------------------------------------------------------------------------------------------
 
-function frame_hook_switch_theme()
+function frame_switch_theme()
 {
     // Flush rules
     flush_rewrite_rules(true);
@@ -136,14 +136,14 @@ function frame_hook_switch_theme()
     if (!empty($redirect)) wp_redirect($redirect);
 }
 
-add_action('after_switch_theme', 'frame_hook_switch_theme');
+add_action('after_switch_theme', 'frame_switch_theme');
 
 
 //--------------------------------------------------------------------------------------------
 // Assets
 //--------------------------------------------------------------------------------------------
 
-function frame_assets($enqueue = false)
+function frame_init_assets($enqueue = false)
 {
     global $wp_styles;
 
@@ -207,18 +207,22 @@ function frame_assets($enqueue = false)
     // }
 }
 
-add_action('init', 'frame_assets');
+add_action('init', 'frame_init_assets');
 
 
-function frame_enqueue_assets()
+function frame_init_enqueue_assets()
 {
     // Tell the function to enqueue the assets, instead of registering them
     frame_assets(true);
 }
 
-add_action('wp_enqueue_scripts', 'frame_enqueue_assets');
+add_action('wp_enqueue_scripts', 'frame_init_enqueue_assets');
 
 
+/**
+ * Automatically set the version for a given asset
+ *
+ */
 function frame_asset_version($asset)
 {
     $versioning = frame_config('assets.versioning');
@@ -281,25 +285,12 @@ function frame_asset_version($asset)
     return $asset;
 }
 
-// add_action('wp_print_styles', 'frame_asset_version');
-
-
-function switch_stylesheet_src( $src, $handle ) {
-
-    d($src, $handle);
-
-    // if( 'colors' == $handle )
-    //     $src = plugins_url( 'my-colors.css', __FILE__ );
-    return $src;
-}
-// add_filter( 'style_loader_src', 'switch_stylesheet_src', 10, 2 );
-
 
 //--------------------------------------------------------------------------------------------
 // Show the custom image size labels in the dropdown when inserting media
 //--------------------------------------------------------------------------------------------
 
-function frame_show_image_sizes($sizes)
+function frame_init_show_image_sizes($sizes)
 {
     $image_sizes = frame_config('images');
     $custom_sizes = array();
@@ -316,27 +307,27 @@ function frame_show_image_sizes($sizes)
     return array_merge($sizes, $custom_sizes);
 }
 
-add_filter('image_size_names_choose', 'frame_show_image_sizes');
+add_filter('image_size_names_choose', 'frame_init_show_image_sizes');
 
 
 //--------------------------------------------------------------------------------------------
 // Register theme menu locations
 //--------------------------------------------------------------------------------------------
 
-function frame_register_menu_locations()
+function frame_init_register_menu_locations()
 {
     $menus = frame_config('menus');
     if (!empty($menus)) register_nav_menus($menus);
 }
 
-add_action('init', 'frame_register_menu_locations');
+add_action('init', 'frame_init_register_menu_locations');
 
 
 //--------------------------------------------------------------------------------------------
 // Set Favicon
 //--------------------------------------------------------------------------------------------
 
-function frame_favicon_init()
+function frame_init_favicon()
 {
     $application = frame_config('application');
 
@@ -347,14 +338,14 @@ function frame_favicon_init()
         echo '<link rel="apple-touch-icon" href="'.$application['favicon_retina'].'">';
 }
 
-add_action('wp_head', 'frame_favicon_init');
+add_action('wp_head', 'frame_init_favicon');
 
 
 //--------------------------------------------------------------------------------------------
 // Register sidebars (aka widget areas)
 //--------------------------------------------------------------------------------------------
 
-function frame_widget_areas_init()
+function frame_init_widget_areas()
 {
 	$sidebars = frame_config('sidebars');
 
@@ -363,14 +354,14 @@ function frame_widget_areas_init()
 			register_sidebar($sidebar);
 }
 
-add_action('widgets_init', 'frame_widget_areas_init');
+add_action('widgets_init', 'frame_init_widget_areas');
 
 
 //--------------------------------------------------------------------------------------------
 // Deny access to wp-admin for specific user roles
 //--------------------------------------------------------------------------------------------
 
-function frame_no_admin_access()
+function frame_init_no_admin_access()
 {
     $redirect = isset($_SERVER['HTTP_REFERER'] ) ? $_SERVER['HTTP_REFERER'] : home_url('/');
 
@@ -381,14 +372,14 @@ function frame_no_admin_access()
 	        exit(wp_redirect($redirect));
 }
 
-add_action('admin_init', 'frame_no_admin_access', 100);
+add_action('admin_init', 'frame_init_no_admin_access', 100);
 
 
 //--------------------------------------------------------------------------------------------
 // Customise the TinyMCE editor
 //--------------------------------------------------------------------------------------------
 
-function frame_mce_buttons_2($buttons)
+function frame_init_mce_buttons_2($buttons)
 {
     $add_buttons = frame_config('editor.add_buttons');
     $remove_buttons = frame_config('editor.remove_buttons');
@@ -407,23 +398,23 @@ function frame_mce_buttons_2($buttons)
 }
 
 if (!empty(frame_config('editor')))
-    add_filter('mce_buttons_2', 'frame_mce_buttons_2');
+    add_filter('mce_buttons_2', 'frame_init_mce_buttons_2');
 
-function frame_mce_before_init_insert_formats($init_array)
+function frame_init_mce_custom_styles($init_array)
 {
     $init_array['style_formats'] = json_encode(frame_config('editor.style_formats'));
     return $init_array;
 }
 
 if (!empty(frame_config('editor.style_formats')))
-    add_filter('tiny_mce_before_init', 'frame_mce_before_init_insert_formats');
+    add_filter('tiny_mce_before_init', 'frame_init_mce_custom_styles');
 
 
 //--------------------------------------------------------------------------------------------
 // Media library mime-types
 //--------------------------------------------------------------------------------------------
 
-function frame_hook_mime_types($wp_mime_types)
+function frame_init_mime_types($wp_mime_types)
 {
     $mime_types = frame_config('admin.mime_types');
     // $mime_types['applescript'] = 'application/x-applescript'; //Adding applescript extension
@@ -437,7 +428,7 @@ function frame_hook_mime_types($wp_mime_types)
     return $wp_mime_types;
 }
 
-add_filter('upload_mimes', 'frame_hook_mime_types', 1, 1);
+add_filter('upload_mimes', 'frame_init_mime_types', 1, 1);
 
 
 //--------------------------------------------------------------------------------------------
@@ -454,7 +445,7 @@ if ($admin_bar === false || (is_array($admin_bar) && !frame_user_role($admin_bar
 // Admin bar logo
 //--------------------------------------------------------------------------------------------
 
-function frame_admin_bar_logo_init()
+function frame_init_admin_bar_logo()
 {
     $admin_bar_logo = frame_config('admin.admin_bar_logo');
 
@@ -465,7 +456,7 @@ function frame_admin_bar_logo_init()
         // echo '<style type="text/css">#header-logo { background-image: url('.$application['admin_logo'].') !important; }</style>';
 }
 
-add_action('admin_head', 'frame_admin_bar_logo_init');
+add_action('admin_head', 'frame_init_admin_bar_logo');
 
 
 
@@ -476,7 +467,7 @@ add_action('admin_head', 'frame_admin_bar_logo_init');
 
 if (frame_config('admin.default_login_css') === false)
 {
-    function frame_hook_login_remove_scripts()
+    function frame_init_login_remove_scripts()
     {
         wp_deregister_style('wp-admin');
         wp_deregister_style('buttons');
@@ -486,7 +477,7 @@ if (frame_config('admin.default_login_css') === false)
         wp_register_style('login', array()); // Fix to actually deregister the login css
     }
 
-    add_action('login_init', 'frame_hook_login_remove_scripts');
+    add_action('login_init', 'frame_init_login_remove_scripts');
 }
 
 
@@ -494,7 +485,7 @@ if (frame_config('admin.default_login_css') === false)
 // Admin login logo
 //--------------------------------------------------------------------------------------------
 
-function frame_admin_login_logo_init()
+function frame_init_admin_login_logo()
 {
     $admin_login_logo = frame_config('admin.admin_login_logo');
 
@@ -502,27 +493,27 @@ function frame_admin_login_logo_init()
         echo '<style type="text/css">body.login div#login h1 a {background-image: url('.$admin_login_logo.'); } </style>';
 }
 
-add_action('login_enqueue_scripts', 'frame_admin_login_logo_init');
+add_action('login_enqueue_scripts', 'frame_init_admin_login_logo');
 
 
 //--------------------------------------------------------------------------------------------
 // Custom admin footer message
 //--------------------------------------------------------------------------------------------
 
-function frame_admin_footer()
+function frame_init_admin_footer()
 {
     $admin_footer = frame_config('admin.admin_footer');
     if (!empty($admin_footer)) echo $admin_footer;
 }
 
-add_filter('admin_footer_text', 'frame_admin_footer');
+add_filter('admin_footer_text', 'frame_init_admin_footer');
 
 
 //--------------------------------------------------------------------------------------------
 // Remove comments and trackbacks support for specific post types
 //--------------------------------------------------------------------------------------------
 
-function frame_comments_trackbacks_support()
+function frame_init_comments_trackbacks_support()
 {
     $disabled_post_types = frame_config('application.comments_trackbacks_support');
 
@@ -544,16 +535,16 @@ function frame_comments_trackbacks_support()
             // Remove comments links from admin bar
             remove_action('admin_bar_menu', 'wp_admin_bar_comments_menu', 50); // WP<3.3
             remove_action('admin_bar_menu', 'wp_admin_bar_comments_menu', 60); // WP 3.3
-            if (is_multisite()) add_action('admin_bar_menu', 'frame_remove_network_comment_links', 500);
+            if (is_multisite()) add_action('admin_bar_menu', 'frame_init_remove_network_comment_links', 500);
         }
     }
 }
 
-add_action('admin_init', 'frame_comments_trackbacks_support');
+add_action('admin_init', 'frame_init_comments_trackbacks_support');
 
-function frame_remove_network_comment_links($wp_admin_bar)
+function frame_init_remove_network_comment_links($wp_admin_bar)
 {
-    $networkactive = ( is_multisite() && array_key_exists( plugin_basename( __FILE__ ), (array) get_site_option( 'active_sitewide_plugins' ) ) );
+    $networkactive = (is_multisite() && array_key_exists(plugin_basename(__FILE__), (array) get_site_option('active_sitewide_plugins')));
 
     if ($networkactive)
     {
@@ -578,13 +569,13 @@ if (frame_config('application.xmlrpc') === false)
     add_filter('xmlrpc_enabled', '__return_false');
 
     // Specifically disable the XMLRPC pingback
-    function frame_hook_remove_xmlrpc_pingback_ping($methods)
+    function frame_init_remove_xmlrpc_pingback_ping($methods)
     {
        unset($methods['pingback.ping']);
        return $methods;
     }
 
-    add_filter('xmlrpc_methods', 'frame_hook_remove_xmlrpc_pingback_ping');
+    add_filter('xmlrpc_methods', 'frame_init_remove_xmlrpc_pingback_ping');
 }
 
 
@@ -592,7 +583,7 @@ if (frame_config('application.xmlrpc') === false)
 // Install plugins
 //--------------------------------------------------------------------------------------------
 
-function frame_register_required_plugins()
+function frame_init_register_required_plugins()
 {
 	$plugins = frame_config('plugins');
 
@@ -615,7 +606,7 @@ function frame_register_required_plugins()
     }
 }
 
-add_action('tgmpa_register', 'frame_register_required_plugins');
+add_action('tgmpa_register', 'frame_init_register_required_plugins');
 
 
 //----------------------------------------------------------------------------------------

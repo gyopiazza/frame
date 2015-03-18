@@ -9,10 +9,10 @@ Useful links:
 - https://github.com/UpTrendingLLC/WP-Scaffolding
 
 
---------------------------------------
+---
 
 
-PRIO A
+[PRIO A]
 
 IMPORTANT: Include grunt-newer in the tasks
 
@@ -38,15 +38,15 @@ Change config.menus to support location (make an array of id and label)
 Add custom pointers (help tooltips)
 http://wpsnipp.com/index.php/functions-php/add-custom-pointers-in-themes-and-plugins/
 
-Add ‘deregister_jquery’ to config.assets or overwrite the ‘jquery’ handle: wp_deregister_script('jquery');
+Overwrite the ‘jquery’ js if $handle == jquery ... wp_deregister_script('jquery');
 
 Add Travis CI support: https://github.com/xwp/wp-dev-lib
 
 
---------------------------------------
+---
 
 
-PRIO B
+[PRIO B]
 
 Reorganize files/folder... maybe move everything inside a "frame" folder?
 Separate 'helpers' into api and helpers (?)
@@ -83,7 +83,7 @@ http://codex.wordpress.org/Plugin_API/Filter_Reference/wp_revisions_to_keep
 Implement some snippets from: https://github.com/roots/roots-snippets (?)
 
 
---------------------------------------
+---
 
 
 TO CHECK:
@@ -95,3 +95,7 @@ Test/Modify 'theme activation' page from roots (https://github.com/roots/roots/t
 Add gruntfile and prepare for SASS (check skyline.is and inuit)
 
 Test editor.add_buttons
+
+Check frame_location('post_id=123') in the admin (and various scenarios like for post_type)
+
+

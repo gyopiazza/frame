@@ -74,4 +74,13 @@ return array(
 			'ajaxurl' => admin_url('admin-ajax.php'), // Accessible in JS via js_data.ajaxurl
 		)),
 	),
+
+
+    // ---------------------------------------------------------------
+    // CSS files to load in the default WP login page (wp-login.php)
+    // Also check admin.default_login_css
+    // ---------------------------------------------------------------
+    'login_css' => array(
+        // get_stylesheet_directory_uri() . '/assets/css/editor-styles.css'
+    ),
 );
