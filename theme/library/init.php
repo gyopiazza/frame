@@ -213,7 +213,7 @@ add_action('init', 'frame_init_assets');
 function frame_init_enqueue_assets()
 {
     // Tell the function to enqueue the assets, instead of registering them
-    frame_assets(true);
+    frame_init_assets(true);
 }
 
 add_action('wp_enqueue_scripts', 'frame_init_enqueue_assets');

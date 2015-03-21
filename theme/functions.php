@@ -11,7 +11,7 @@ function my_init()
     // print_r(debug_backtrace());
     // echo '</pre>';
 
-    d('test');
+    // d('test');
 }
 
 add_action('init', 'my_init');
