@@ -2,6 +2,8 @@
 
 - [ ] IMPORTANT: Include grunt-newer in the tasks
 
+- [ ] IMPORTANT: Include grunt-newer in the tasks
+
 - [ ] Add 'environments' to the config files to load different files depending on the environment (especially useful for assets dev/live)
 
 - [ ] Add 'social sharing' links helper (from pins), also launch them in a popup (magnific popup)
@@ -20,7 +22,7 @@
 
 - [ ] Fix admin_bar_logo
 
-- [ ] Change config.menus to support location (make an array of id and label)
+- [x] Change config.menus to support location (make an array of id and label)
 
 - [ ] Add custom pointers (help tooltips) http://wpsnipp.com/index.php/functions-php/add-custom-pointers-in-themes-and-plugins/
 

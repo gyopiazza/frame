@@ -22,6 +22,11 @@ require_once(locate_template('library/plugin-activation.php'));
 // require_once(locate_template('library/theme-activation.php'));
 
 
+// Set the required WP maximum allowed content width
+if (!isset($content_width))
+    $content_width = frame_config('application.content_width');
+
+
 //--------------------------------------------------------------------------------------------
 // Automatically load files from folders
 //--------------------------------------------------------------------------------------------
@@ -160,6 +165,7 @@ function frame_init_assets($enqueue = false)
     {
         foreach($assets['css'] as $key => $asset)
         {
+            // True when the asset's array key starts with 'if'
             $is_conditional = substr($key, 0, 2) === 'if';
 
             if ( is_numeric($key) || (is_string($key) && frame_location($key) || $is_conditional) )
@@ -177,10 +183,16 @@ function frame_init_assets($enqueue = false)
 
     // Javascript
     if (!empty($assets['javascript']))
+    {
         foreach($assets['javascript'] as $key => $asset)
+        {
             if ( is_numeric($key) || (is_string($key) && frame_location($key)) )
+            {
                 if (substr($asset[0], 0, 1) !== '_' && $action !== 'register')
                     call_user_func_array('wp_'.$action.'_script', $asset);
+            }
+        }
+    }
 
     // Javascript data
     if (!empty($assets['javascript_data']))
@@ -188,23 +200,9 @@ function frame_init_assets($enqueue = false)
             if ( is_numeric($key) || (is_string($key) && frame_location($key)) )
                 call_user_func_array('wp_localize_script', $asset);
 
-    // Load the comment reply script on singular posts with open comments if threaded comments are supported.
+    // Load the comment-reply script on singular posts with open comments if the threaded comments are supported.
     if ($action === 'enqueue' && is_singular() && get_option('thread_comments') && comments_open() && frame_config('application.comments_trackbacks_support'))
         wp_enqueue_script('comment-reply');
-
-
-    // if ($action == 'enqueue')
-    // {
-        // CSS
-        // wp_enqueue_style('my-theme-ie', get_stylesheet_directory_uri().'/css/ie.css', array('theme'));
-        // $wp_styles->add_data('my-theme-ie', 'conditional', 'IE');
-
-        // Javascript
-        // wp_enqueue_script('my-theme-ie', get_stylesheet_directory_uri() . "/js/ie.js");
-        // $wp_scripts->add_data('my-theme-ie', 'conditional', 'IE');
-        // wp_enqueue_script( 'jsFileIdentifier', get_stylesheet_directory_uri() . "/js/ie.js",  array('theme-scripts'));
-        // $wp_scripts->add_data( 'jsFileIdentifier', 'conditional', 'lt IE 9' );
-    // }
 }
 
 add_action('init', 'frame_init_assets');

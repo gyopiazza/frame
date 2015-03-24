@@ -15,11 +15,20 @@ return array(
 	// ---------------------------------------------------------------
 	'version' => '1.0.0',
 
+
 	// ---------------------------------------------------------------
 	// Set the current environment, useful for specific optimizations
     // Not currently in use
 	// ---------------------------------------------------------------
 	'environment' => 'development',
+
+
+    // ---------------------------------------------------------------
+    // set the maximum allowed width for any content in the theme,
+    // like oEmbeds and images added to posts.
+    // https://codex.wordpress.org/Content_Width
+    // ---------------------------------------------------------------
+    'content_width' => 960,
 
 
 	// ---------------------------------------------------------------

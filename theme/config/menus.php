@@ -1,10 +1,10 @@
 <?php
 
 /**
- * Menus
+ * Menu Locations
  *
  * Insert as many locations as you want.
- * Key is menu location slug and its value is its description.
+ * Key is the menu location slug and its value is its description.
  *
  * @key string The menu location slug.
  * @param string The menu description.
