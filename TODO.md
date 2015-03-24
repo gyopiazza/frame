@@ -14,33 +14,34 @@ Useful links:
 
 [PRIO A]
 
-IMPORTANT: Include grunt-newer in the tasks
+[ ] IMPORTANT: Include grunt-newer in the tasks
 
-Add 'environments' to the config files to load different files depending on the environment (especially useful for assets dev/live)
+[ ] Add 'environments' to the config files to load different files depending on the environment (especially useful for assets dev/live)
 
-Add 'social sharing' links helper (from pins), also launch them in a popup (magnific popup)
+[ ] Add 'social sharing' links helper (from pins), also launch them in a popup (magnific popup)
 
-Add automatic styleguide generator
+[ ] Add automatic styleguide generator
 
-Add automatic documentation generator
+[ ] Add automatic documentation generator
 
-Add example widget to 'widgets'
+[ ] Add example widget to 'widgets'
 
-Add application.version to the js/css assets
-Add IE conditional assets loading (http://www.quirksmode.org/css/condcom.html)
+[x] Add application.version to the js/css assets
 
-Implement – somehow – the rewrite rules from pins
+[x] Add IE conditional assets loading (http://www.quirksmode.org/css/condcom.html)
 
-Fix admin_bar_logo
+[ ] Implement – somehow – the rewrite rules from pins
 
-Change config.menus to support location (make an array of id and label)
+[ ] Fix admin_bar_logo
 
-Add custom pointers (help tooltips)
+[ ] Change config.menus to support location (make an array of id and label)
+
+[ ] Add custom pointers (help tooltips)
 http://wpsnipp.com/index.php/functions-php/add-custom-pointers-in-themes-and-plugins/
 
-Overwrite the ‘jquery’ js if $handle == jquery ... wp_deregister_script('jquery');
+[ ] Overwrite the ‘jquery’ js if $handle == jquery ... wp_deregister_script('jquery');
 
-Add Travis CI support: https://github.com/xwp/wp-dev-lib
+[ ] Add Travis CI support: https://github.com/xwp/wp-dev-lib
 
 
 ---
@@ -81,6 +82,10 @@ Change admin.post_revision config to allow for an array of ['post_type' => X] va
 http://codex.wordpress.org/Plugin_API/Filter_Reference/wp_revisions_to_keep
 
 Implement some snippets from: https://github.com/roots/roots-snippets (?)
+
+Add some snippets that can only be applied manually on a WP install (wp-config, htaccess etc...)
+Change default media path/url.
+Create htaccess with usefulness like limiting access by IP, maintenance mode...
 
 
 ---
