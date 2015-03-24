@@ -14,34 +14,33 @@ Useful links:
 
 [PRIO A]
 
-[ ] IMPORTANT: Include grunt-newer in the tasks
+- [ ] IMPORTANT: Include grunt-newer in the tasks
 
-[ ] Add 'environments' to the config files to load different files depending on the environment (especially useful for assets dev/live)
+- [ ] Add 'environments' to the config files to load different files depending on the environment (especially useful for assets dev/live)
 
-[ ] Add 'social sharing' links helper (from pins), also launch them in a popup (magnific popup)
+- [ ] Add 'social sharing' links helper (from pins), also launch them in a popup (magnific popup)
 
-[ ] Add automatic styleguide generator
+- [ ] Add automatic styleguide generator
 
-[ ] Add automatic documentation generator
+- [ ] Add automatic documentation generator
 
-[ ] Add example widget to 'widgets'
+- [ ] Add example widget to 'widgets'
 
-[x] Add application.version to the js/css assets
+- [x] Add application.version to the js/css assets
 
-[x] Add IE conditional assets loading (http://www.quirksmode.org/css/condcom.html)
+- [x] Add IE conditional assets loading (http://www.quirksmode.org/css/condcom.html)
 
-[ ] Implement – somehow – the rewrite rules from pins
+- [ ] Implement – somehow – the rewrite rules from pins
 
-[ ] Fix admin_bar_logo
+- [ ] Fix admin_bar_logo
 
-[ ] Change config.menus to support location (make an array of id and label)
+- [ ] Change config.menus to support location (make an array of id and label)
 
-[ ] Add custom pointers (help tooltips)
-http://wpsnipp.com/index.php/functions-php/add-custom-pointers-in-themes-and-plugins/
+- [ ] Add custom pointers (help tooltips) http://wpsnipp.com/index.php/functions-php/add-custom-pointers-in-themes-and-plugins/
 
-[ ] Overwrite the ‘jquery’ js if $handle == jquery ... wp_deregister_script('jquery');
+- [ ] Overwrite the ‘jquery’ js if $handle == jquery ... wp_deregister_script('jquery');
 
-[ ] Add Travis CI support: https://github.com/xwp/wp-dev-lib
+- [ ] Add Travis CI support: https://github.com/xwp/wp-dev-lib
 
 
 ---
