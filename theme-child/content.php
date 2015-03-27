@@ -1,14 +1,3 @@
-<?php get_header(); ?>
-
-<?php
-
-global $template;
-echo 'Child ' . basename($template);
-
-?>
-
-<?php while (have_posts()) : the_post(); ?>
-
 <div class="entry">
     <?php
         if (is_single()) :
@@ -18,7 +7,3 @@ echo 'Child ' . basename($template);
         endif;
     ?>
 </div><!-- .entry-header -->
-
-<?php endwhile; ?>
-
-<?php get_footer(); ?>

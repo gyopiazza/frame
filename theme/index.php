@@ -13,11 +13,8 @@
 <body>
 
 
-<?php
+<?php echo 'Parent'; ?>
 
-echo 'Parent';
-
-?>
 
 <?php wp_footer(); ?>
 </body>

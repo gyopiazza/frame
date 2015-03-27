@@ -18,6 +18,8 @@ require_once(locate_template('library/aliases.php'));
 // Load the plugins activation class
 require_once(locate_template('library/plugin-activation.php'));
 
+// require_once(locate_template('library/plugins.php'));
+
 // Load the theme activation file
 // require_once(locate_template('library/theme-activation.php'));
 
@@ -38,6 +40,9 @@ frame_load_files('hooks', true);
 // Scan and import files to be autoloaded
 // $autoload = frame_load_files('autoload', true);
 frame_load_files('autoload', true);
+
+// Scan and import widgets
+frame_load_files('widgets', true);
 
 
 //--------------------------------------------------------------------------------------------
@@ -605,6 +610,20 @@ function frame_init_register_required_plugins()
 }
 
 add_action('tgmpa_register', 'frame_init_register_required_plugins');
+
+
+// function test_plugins()
+// {
+//     $plugins = array(
+//         array('name' => 'test', 'path' => locate_template('plugins/test.zip'), 'install' => 'test/test.php'),
+//         // array('name' => 'jetpack', 'path' => 'http://downloads.wordpress.org/plugin/jetpack.1.3.zip', 'install' => 'jetpack/jetpack.php'),
+//         // array('name' => 'buddypress', 'path' => 'http://downloads.wordpress.org/plugin/buddypress.1.5.5.zip', 'install' => 'buddypress/bp-loader.php'),
+//         // array('name' => 'tumblr-importer', 'path' => 'http://downloads.wordpress.org/plugin/tumblr-importer.0.5.zip', 'install' => 'tumblr-importer/tumblr-importer.php')
+//     );
+//     frame_get_plugins($plugins);
+// }
+
+// add_action('after_switch_theme', 'test_plugins');
 
 
 //----------------------------------------------------------------------------------------

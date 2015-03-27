@@ -247,7 +247,7 @@ function frame_segments($index = null)
 
 function frame_location($params = null)
 {
-    global $post, $pagenow, $typenow, $current_screen;
+    global $post, $pagenow, $typenow, $current_screen, $template;
 
     // Handle function arguments
     $num_args = func_num_args();
@@ -299,7 +299,7 @@ function frame_location($params = null)
     $logged_in  = is_user_logged_in(); // Is the current user logged in?
     $url        = frame_url(); // The current URL
     $segments   = (!empty($params['segments']) && frame_segments() != $params['segments']) ? false : frame_segments(); // The URI segments to match
-    $file       = basename($_SERVER['SCRIPT_NAME']); // The current filename (in the frontend it's always 'index.php')
+    $file       = ($admin) ? basename($_SERVER['SCRIPT_NAME']) : basename($template); // The current filename (in the frontend it's 'index.php' or 'single.php' etc...)
     $post_type  = null; // The current post type
     $post_id    = (isset($post->ID)) ? $post->ID : null; // The current post id
     $page       = isset($_REQUEST['page']) ? sanitize_key($_REQUEST['page']) : null; // The current page number (used when paginating results)
