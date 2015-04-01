@@ -1,3 +1,8 @@
+
+<?php
+    echo '<br>File (should be "content.php"): '.location('file');
+?>
+
 <div class="entry">
     <?php
         if (is_single()) :

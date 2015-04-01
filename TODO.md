@@ -74,6 +74,10 @@ http://codex.wordpress.org/Plugin_API/Filter_Reference/wp_revisions_to_keep
 Change default media path/url.
 Create htaccess with usefulness like limiting access by IP, maintenance mode...
 
+- [ ] Check the is_tree() function:
+https://github.com/chriscoyier/css-tricks-functionality-plugin/blob/master/includes/template-functions.php#L86
+
+- [ ] Double check: application.comments_trackbacks_support (it says an array of post types to disable on... it should be reversed or using the prepended '_')
 
 ---
 

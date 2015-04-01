@@ -500,6 +500,27 @@ add_action('login_enqueue_scripts', 'frame_init_admin_login_logo');
 
 
 //--------------------------------------------------------------------------------------------
+// Custom admin login title
+//--------------------------------------------------------------------------------------------
+
+if (frame_config('admin.login_logo_title')) {
+    function frame_init_login_logo_title() {
+        return frame_config('admin.login_logo_title');
+    }
+
+    add_filter('login_headertitle', 'frame_init_login_logo_title');
+}
+
+if (frame_config('admin.login_logo_url')) {
+    function frame_init_login_logo_url() {
+        return frame_config('admin.login_logo_url');
+    }
+
+    add_filter('login_headerurl', 'frame_init_login_logo_url');
+}
+
+
+//--------------------------------------------------------------------------------------------
 // Custom admin footer message
 //--------------------------------------------------------------------------------------------
 
@@ -632,6 +653,21 @@ add_action('tgmpa_register', 'frame_init_register_required_plugins');
 
 if (!defined('DISALLOW_FILE_EDIT') && frame_config('admin.files_editor') === false)
     define('DISALLOW_FILE_EDIT', true);
+
+
+//----------------------------------------------------------------------------------------
+// Set the maximum amount of allowed custom fields
+//----------------------------------------------------------------------------------------
+
+if (frame_config('admin.custom_post_fields_limit'))
+{
+    function frame_init_custom_fields_limit($limit)
+    {
+        return frame_config('admin.custom_post_fields_limit');
+    }
+
+    add_filter('postmeta_form_limit' , 'frame_init_custom_fields_limit');
+}
 
 
 //----------------------------------------------------------------------------------------

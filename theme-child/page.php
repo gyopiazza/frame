@@ -3,13 +3,13 @@
 <?php
 
 echo 'Child <br>';
-echo 'File (should be "single.php"): '.location('file');
+echo 'File (should be "page.php"): '.location('file');
 
 ?>
 
 <?php
     while (have_posts()) : the_post();
-        get_template_part('content', get_post_format());
+        get_template_part('content');
     endwhile;
 ?>
 
