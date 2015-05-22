@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Admin
  *
@@ -35,7 +34,7 @@ return array(
 
 
 	// ---------------------------------------------------------------
-    // Enable/Disable the default admin login CSS (wp-login.php)
+    // Enable/Disable the default admin login CSS (in wp-login.php)
     // ---------------------------------------------------------------
     'default_login_css' => false,
 
@@ -62,7 +61,7 @@ return array(
 	// ---------------------------------------------------------------
 	// Admin footer message (Replaces "Thank you for creating...")
 	// ---------------------------------------------------------------
-	'admin_footer' => __('You are using a <a href="#">Theme</a> designed by <a href="#">Someone</a>', 'theme'),
+	'admin_footer' => __('You are using a <a href="#">Theme</a> designed by <a href="#">Gyo</a>', 'theme'),
 
 
 	// ---------------------------------------------------------------

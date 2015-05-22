@@ -299,16 +299,20 @@ function frame_location($params = null)
     $logged_in  = is_user_logged_in(); // Is the current user logged in?
     $url        = frame_url(); // The current URL
     $segments   = (!empty($params['segments']) && frame_segments() != $params['segments']) ? false : frame_segments(); // The URI segments to match
-    $file       = ($admin) ? basename($_SERVER['SCRIPT_NAME']) : basename($template); // The current filename (in the frontend it's 'index.php', 'single.php' etc... it doesn't work with get_template_part, use __FILE__ instead)
+    $file       = ($admin) ? basename($_SERVER['SCRIPT_NAME']) : basename($template); // The current filename (in the frontend it's 'index.php', 'archive.php' etc... it doesn't work with get_template_part: use __FILE__ instead)
     $post_type  = null; // The current post type
     $post_id    = (isset($post->ID)) ? $post->ID : null; // The current post id
+    $slug       = (isset($post->post_name)) ? $post->post_name : null; // The current post slug
     $page       = isset($_REQUEST['page']) ? sanitize_key($_REQUEST['page']) : null; // The current page number (used when paginating results)
     $action     = isset($_GET['action']) ? sanitize_key($_GET['action']) : null; // Used in the admin
-    $ajax       = (!defined('DOING_AJAX') || DOING_AJAX === false) ? false : true; // Are doing an ajax request?
+    $ajax       = ( !defined('DOING_AJAX') || (defined('DOING_AJAX') && DOING_AJAX === false) ) ? false : true; // Are doing an ajax request?
     $saving     = (!empty($_POST)) ? true : false; // Are we sending post data? (maybe change this...)
+    $customizer = is_customize_preview();
 
 
-    // Get type from post object
+    // $post_type specific optimization
+
+    // Get post type from post object
     if ($post && $post->post_type)
         $post_type = $post->post_type;
     // Check $typenow object
@@ -330,6 +334,8 @@ function frame_location($params = null)
     else if ($file == 'post.php' && isset($_REQUEST['post']) && !isset($_REQUEST['post_type']) && $admin)
         $post_type = get_post_type(sanitize_key($_REQUEST['post']));
 
+    // End of $post_type specific optimization
+
 
     // Put the values together
     $location = array(
@@ -341,10 +347,12 @@ function frame_location($params = null)
         'file'          => $file,
         'post_type'     => $post_type,
         'post_id'       => $post_id,
+        'slug'          => $slug,
         'page'          => $page,
         'action'        => $action,
         'ajax'          => $ajax,
-        'saving'        => $saving
+        'saving'        => $saving,
+        'customizer'    => $customizer,
     );
 
     // d($current_screen, 'current_screen', true);
@@ -574,6 +582,7 @@ function frame_location_item($key = null, $val = null)
 }
 
 
+
 /**
  * Return the current URL
  *
@@ -593,6 +602,7 @@ function frame_url()
 }
 
 
+
 /**
  * Return the current theme (parent or child) URL with optional path
  * Basicallt wrapper for the get_stylesheet_directory_uri() function
@@ -604,6 +614,7 @@ function frame_theme_url($path = '')
 {
     return trailingslashit(get_stylesheet_directory_uri()).$path;
 }
+
 
 
 /**
@@ -630,10 +641,10 @@ function frame_user_role($role, $user_id = null)
 }
 
 
+
 /**
  * Gets the posts count by author.
  *
- * @todo Add configurable post_type
  * @param int $user_id The ID of the posts author
  * @param string|array The post type(s)
  * @return int The posts count
@@ -651,6 +662,64 @@ function frame_count_posts_by_author($user_id, $post_type = array('post', 'page'
 
     return $query->found_posts;
 }
+
+
+
+/**
+ * Output inline styles in the pages
+ *
+ * @param array The style to add
+ * @return void
+ *
+ * @example
+ *
+ * Without conditions, output in all the pages
+ *
+ * frame_style(array(
+ *      'p' => 'color: white;'
+ * ));
+ *
+ *
+ * With condition, only output when the current post_id=2
+ *
+ * frame_style('post_id=2', array(
+ *      'p' => 'color: white;'
+ * ));
+ *
+ */
+
+global $frame_styles;
+$frame_styles = array();
+
+function frame_style($condition, $style = null)
+{
+    global $frame_styles;
+
+    if (is_string($condition))
+        $frame_styles[$condition] = $style;
+    else
+        $frame_styles[] = $condition;
+}
+
+function frame_output_style()
+{
+    global $frame_styles;
+
+    $output = '<style>';
+
+    foreach ($frame_styles as $condition => $style)
+    {
+        if ((is_string($condition) && frame_location($condition)) || is_numeric($condition))
+            foreach ($style as $selector => $rules)
+                $output .= $selector . '{' . $rules . '}';
+    }
+
+    $output .= '</style>';
+
+    echo $output;
+}
+
+add_action('wp_head','frame_output_style');
 
 
 /**
@@ -681,6 +750,8 @@ function frame_share_links($providers = null, $post_id = null)
 
     $output .= '</ul>';
 }
+
+
 
 /**
  * Social share provider URL

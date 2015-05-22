@@ -1,9 +1,8 @@
 <?php
-
 /**
  * Sidebars (aka Widget areas)
  *
- * Add widget sidebars to your theme. 
+ * Add widget sidebars to your theme.
  * Place WordPress default settings for sidebars.
  *
  * @package frame

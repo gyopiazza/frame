@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Menu Locations
  *

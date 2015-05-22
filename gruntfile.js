@@ -14,7 +14,8 @@ module.exports = function(grunt) {
         js:     'assets/js/',
         img:    'assets/img/',
         hooks:  'hooks/',
-        tests:  'tests/'
+        tests:  'tests/',
+        docs:   'docs/'
     };
 
 
@@ -64,16 +65,20 @@ module.exports = function(grunt) {
     grunt.registerTask('compile', ['sass', 'autoprefixer', 'cssmin', 'uglify']);
 
     // Build and create a theme package ready for publishing
-    grunt.registerTask('build', ['sass', 'autoprefixer', 'cssmin', 'uglify', 'clean', 'copy:dist', 'imagemin', 'compress']);
+    grunt.registerTask('build', ['sass', 'autoprefixer', 'cssmin', 'uglify', 'clean:build', 'copy:dist', 'imagemin', 'compress']);
 
     // Build and create a theme package for development
-    grunt.registerTask('build-dev', ['sass', 'autoprefixer', 'cssmin', 'uglify', 'clean', 'copy:dev', 'imagemin', 'compress']);
+    grunt.registerTask('build-dev', ['sass', 'autoprefixer', 'cssmin', 'uglify', 'clean:build', 'copy:dev', 'imagemin', 'compress']);
 
     // Enable all the hooks
     grunt.registerTask('enable_hooks', ['rename:enable_hooks']);
 
     // Disable all the hooks
     grunt.registerTask('disable_hooks', ['rename:disable_hooks']);
+
+    // Generate documentation from source
+    grunt.registerTask('docs', ['clean:docs', 'phpdocumentor']);
+
 
     // Run the tests
     // grunt.registerTask('test', ['dalek']);

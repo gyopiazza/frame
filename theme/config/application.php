@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Application
  *
@@ -11,7 +10,7 @@
 return array(
 
 	// ---------------------------------------------------------------
-	// Theme version, also used for the assets cache
+	// Theme version
 	// ---------------------------------------------------------------
 	'version' => '1.0.0',
 
@@ -24,7 +23,7 @@ return array(
 
 
     // ---------------------------------------------------------------
-    // set the maximum allowed width for any content in the theme,
+    // Set the maximum allowed width for any content in the theme,
     // like oEmbeds and images added to posts.
     // https://codex.wordpress.org/Content_Width
     // ---------------------------------------------------------------
@@ -43,8 +42,8 @@ return array(
 
 
 	// ---------------------------------------------------------------
-	// An array of post types on which to disable comments/trackbacks
-    // bool|array: If false, the comments are disabled everywhere
+	// array: post types for which to disable comments/trackbacks
+    // bool: If false, the comments are disabled everywhere
 	// ---------------------------------------------------------------
 	'comments_trackbacks_support' => true,
 

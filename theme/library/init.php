@@ -524,13 +524,13 @@ if (frame_config('admin.login_logo_url')) {
 // Custom admin footer message
 //--------------------------------------------------------------------------------------------
 
-function frame_init_admin_footer()
+function frame_init_admin_footer($old_admin_footer)
 {
     $admin_footer = frame_config('admin.admin_footer');
-    if (!empty($admin_footer)) echo $admin_footer;
+    return (!empty($admin_footer)) ? $admin_footer : $old_admin_footer;
 }
 
-add_filter('admin_footer_text', 'frame_init_admin_footer');
+add_filter('admin_footer_text', 'frame_init_admin_footer', 9999999, 1);
 
 
 //--------------------------------------------------------------------------------------------

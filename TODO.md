@@ -2,8 +2,6 @@
 
 - [ ] IMPORTANT: Include grunt-newer in the tasks
 
-- [ ] IMPORTANT: Include grunt-newer in the tasks
-
 - [ ] Add 'environments' to the config files to load different files depending on the environment (especially useful for assets dev/live)
 
 - [ ] Add 'social sharing' links helper (from pins), also launch them in a popup (magnific popup)
@@ -68,16 +66,30 @@ http://code.tutsplus.com/tutorials/create-a-license-controlled-theme-and-plugin-
 - [ ] Change admin.post_revision config to allow for an array of ['post_type' => X] values:
 http://codex.wordpress.org/Plugin_API/Filter_Reference/wp_revisions_to_keep
 
-- [ ] Implement some snippets from: https://github.com/roots/roots-snippets (?)
-
 - [ ] Add some snippets that can only be applied manually on a WP install (wp-config, htaccess etc...)
 Change default media path/url.
 Create htaccess with usefulness like limiting access by IP, maintenance mode...
 
-- [ ] Check the is_tree() function:
-https://github.com/chriscoyier/css-tricks-functionality-plugin/blob/master/includes/template-functions.php#L86
+- [ ] Double check: application.comments_trackbacks_support
+It says an array of post types to disable on... it should be reversed or using the prepended '_'
 
-- [ ] Double check: application.comments_trackbacks_support (it says an array of post types to disable on... it should be reversed or using the prepended '_')
+- [ ] Make assets.editor_styles conditional
+https://gist.github.com/gyopiazza/9d49b54124a3de63771c
+
+- [ ] Create basic maintenance.php & db-error.php pages (they need to be placed into wp-content/)
+http://alisothegeek.com/2011/01/custom-maintenance-and-database-error-pages-in-wordpress/
+
+- [ ] Add get_queried_object_id() to $post_id in frame_location #304
+
+- [ ] Remove application.version and use the one from style.css
+
+- [ ] Maybe rename config.application to config.theme
+
+- [ ] Add 'client' (dalekjs) and 'server' (pick a php test lib) inside tests to differentiate the types
+
+- [ ] Add custom admin color schemes
+https://www.domsammut.com/code/add-a-custom-admin-colour-scheme-in-wordpress
+
 
 ---
 
@@ -93,6 +105,13 @@ Add gruntfile and prepare for SASS (check skyline.is and inuit)
 Test editor.add_buttons
 
 Check frame_location('post_id=123') in the admin (and various scenarios like for post_type)
+Check frame_location('slug=something')
+
+Check the is_tree() function:
+https://github.com/chriscoyier/css-tricks-functionality-plugin/blob/master/includes/template-functions.php#L86
+
+Implement some snippets from: https://github.com/roots/roots-snippets (?)
+
 
 
 ###Useful links:
@@ -102,3 +121,16 @@ Check frame_location('post_id=123') in the admin (and various scenarios like for
 - https://github.com/FlagshipWP/compass
 - https://github.com/justintadlock/get-the-image
 - https://github.com/UpTrendingLLC/WP-Scaffolding
+
+
+###Development plugins:
+– Debug Bar
+– Debug Bar Extender
+– Rewrite Rules Inspector
+– Log Deprecated Notices
+– Regenerate Thumbnails
+– Theme Check
+– ThemeForest-Check
+– Theme Mentor
+
+

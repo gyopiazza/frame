@@ -9,6 +9,7 @@
  * @copyright Copyright (c) 2012, Thomas Griffin
  * @license   http://opensource.org/licenses/gpl-2.0.php GPL v2 or later
  * @link      https://github.com/thomasgriffin/TGM-Plugin-Activation
+ * @ignore
  */
 
 /*

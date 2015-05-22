@@ -1,11 +1,8 @@
 <?php
 
 /**
- * Application
+ * Theme activation class
  *
- * Generic application settings
- *
- * @source https://github.com/roots/roots/
  * @package frame
  */
 

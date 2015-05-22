@@ -1,7 +1,14 @@
 <?php
 
-// Add post slug to body class, love this - Credit: Starkers Wordpress Theme
-function frame_add_slug_to_body_class($classes)
+/**
+ * Add post slug to body class, love this - Credit: Starkers Wordpress Theme
+ *
+ * @package frame
+ * @subpackage frame\hooks
+ * @param array $classes The body classes array
+ * @return array $fields The modified body classes array
+ */
+function frame_hook_add_slug_to_body_class($classes)
 {
     global $post;
     if (is_home()) {
@@ -18,4 +25,5 @@ function frame_add_slug_to_body_class($classes)
     return $classes;
 }
 
-add_filter('body_class', 'frame_add_slug_to_body_class');
+add_filter('body_class', 'frame_hook_add_slug_to_body_class');
+

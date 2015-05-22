@@ -1,4 +1,5 @@
-// Clean up the 'build' folder
+// Clean up folders
 module.exports = {
-    build: ['<%= config.build %>']
+    build: ['<%= config.build %>'],
+    docs: ['<%= config.docs %>']
 };

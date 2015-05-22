@@ -32,6 +32,8 @@ function theme_child_init()
     //     echo 'no';
 
     // d(location('post_type'), 'location');
+
+    // d(get_theme_mod("some_field_settings"));
 }
 
 add_action('init', 'theme_child_init');

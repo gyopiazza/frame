@@ -8,7 +8,7 @@ if ( ! function_exists( '_wp_render_title_tag' ) ) :
 	 * @param string $sep Optional separator.
 	 * @return string The filtered title.
 	 */
-	function _s_wp_title( $title, $sep ) {
+	function frame_hook_wp_title( $title, $sep ) {
 		if ( is_feed() ) {
 			return $title;
 		}
@@ -26,5 +26,6 @@ if ( ! function_exists( '_wp_render_title_tag' ) ) :
 		}
 		return $title;
 	}
-	add_filter( 'wp_title', '_s_wp_title', 10, 2 );
+	add_filter( 'wp_title', 'frame_hook_wp_title', 10, 2 );
 endif;
+
