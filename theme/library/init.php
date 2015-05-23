@@ -6,23 +6,6 @@
  * @package frame
  */
 
-// Load the debug functions file
-require_once(locate_template('library/debug.php'));
-
-// Load the helpers file
-require_once(locate_template('library/helpers.php'));
-
-// Load the aliases file
-require_once(locate_template('library/aliases.php'));
-
-// Load the plugins activation class
-require_once(locate_template('library/plugin-activation.php'));
-
-// require_once(locate_template('library/plugins.php'));
-
-// Load the theme activation file
-// require_once(locate_template('library/theme-activation.php'));
-
 
 // Set the required WP maximum allowed content width
 if (!isset($content_width))
@@ -33,16 +16,15 @@ if (!isset($content_width))
 // Automatically load files from folders
 //--------------------------------------------------------------------------------------------
 
-// Scan and import hooks
-// $hooks = frame_load_files('hooks', true);
+// Scan and import hooks from the 'hooks' folder
 frame_load_files('hooks', true);
 
-// Scan and import files to be autoloaded
-// $autoload = frame_load_files('autoload', true);
+// Scan and import the files in the 'autoload' folder
 frame_load_files('autoload', true);
 
-// Scan and import widgets
+// Scan and import widgets from the 'widgets' folder
 frame_load_files('widgets', true);
+
 
 
 //--------------------------------------------------------------------------------------------
@@ -132,6 +114,7 @@ function frame_theme_setup()
 add_action('after_setup_theme', 'frame_theme_setup');
 
 
+
 //--------------------------------------------------------------------------------------------
 // Theme activation
 //--------------------------------------------------------------------------------------------
@@ -147,6 +130,7 @@ function frame_switch_theme()
 }
 
 add_action('after_switch_theme', 'frame_switch_theme');
+
 
 
 //--------------------------------------------------------------------------------------------
@@ -222,10 +206,11 @@ function frame_init_enqueue_assets()
 add_action('wp_enqueue_scripts', 'frame_init_enqueue_assets');
 
 
-/**
- * Automatically set the version for a given asset
- *
- */
+
+//--------------------------------------------------------------------------------------------
+// Automatically set the version for a given asset
+//--------------------------------------------------------------------------------------------
+
 function frame_asset_version($asset)
 {
     $versioning = frame_config('assets.versioning');
@@ -289,6 +274,7 @@ function frame_asset_version($asset)
 }
 
 
+
 //--------------------------------------------------------------------------------------------
 // Show the custom image size labels in the dropdown when inserting media
 //--------------------------------------------------------------------------------------------
@@ -313,6 +299,7 @@ function frame_init_show_image_sizes($sizes)
 add_filter('image_size_names_choose', 'frame_init_show_image_sizes');
 
 
+
 //--------------------------------------------------------------------------------------------
 // Register theme menu locations
 //--------------------------------------------------------------------------------------------
@@ -324,6 +311,7 @@ function frame_init_register_menu_locations()
 }
 
 add_action('init', 'frame_init_register_menu_locations');
+
 
 
 //--------------------------------------------------------------------------------------------
@@ -344,6 +332,7 @@ function frame_init_favicon()
 add_action('wp_head', 'frame_init_favicon');
 
 
+
 //--------------------------------------------------------------------------------------------
 // Register sidebars (aka widget areas)
 //--------------------------------------------------------------------------------------------
@@ -358,6 +347,7 @@ function frame_init_widget_areas()
 }
 
 add_action('widgets_init', 'frame_init_widget_areas');
+
 
 
 //--------------------------------------------------------------------------------------------
@@ -376,6 +366,7 @@ function frame_init_no_admin_access()
 }
 
 add_action('admin_init', 'frame_init_no_admin_access', 100);
+
 
 
 //--------------------------------------------------------------------------------------------
@@ -413,6 +404,7 @@ if (!empty(frame_config('editor.style_formats')))
     add_filter('tiny_mce_before_init', 'frame_init_mce_custom_styles');
 
 
+
 //--------------------------------------------------------------------------------------------
 // Media library mime-types
 //--------------------------------------------------------------------------------------------
@@ -434,6 +426,7 @@ function frame_init_mime_types($wp_mime_types)
 add_filter('upload_mimes', 'frame_init_mime_types', 1, 1);
 
 
+
 //--------------------------------------------------------------------------------------------
 // Enable/Disable admin bar
 //--------------------------------------------------------------------------------------------
@@ -442,6 +435,7 @@ $admin_bar = frame_config('admin.admin_bar');
 
 if ($admin_bar === false || (is_array($admin_bar) && !frame_user_role($admin_bar)))
     add_filter('show_admin_bar', '__return_false');
+
 
 
 //--------------------------------------------------------------------------------------------
@@ -460,7 +454,6 @@ function frame_init_admin_bar_logo()
 }
 
 add_action('admin_head', 'frame_init_admin_bar_logo');
-
 
 
 
@@ -484,6 +477,7 @@ if (frame_config('admin.default_login_css') === false)
 }
 
 
+
 //--------------------------------------------------------------------------------------------
 // Admin login logo
 //--------------------------------------------------------------------------------------------
@@ -497,6 +491,7 @@ function frame_init_admin_login_logo()
 }
 
 add_action('login_enqueue_scripts', 'frame_init_admin_login_logo');
+
 
 
 //--------------------------------------------------------------------------------------------
@@ -520,6 +515,7 @@ if (frame_config('admin.login_logo_url')) {
 }
 
 
+
 //--------------------------------------------------------------------------------------------
 // Custom admin footer message
 //--------------------------------------------------------------------------------------------
@@ -531,6 +527,7 @@ function frame_init_admin_footer($old_admin_footer)
 }
 
 add_filter('admin_footer_text', 'frame_init_admin_footer', 9999999, 1);
+
 
 
 //--------------------------------------------------------------------------------------------
@@ -583,6 +580,7 @@ function frame_init_remove_network_comment_links($wp_admin_bar)
 }
 
 
+
 //--------------------------------------------------------------------------------------------
 // Disable XMLRPC
 //--------------------------------------------------------------------------------------------
@@ -601,6 +599,7 @@ if (frame_config('application.xmlrpc') === false)
 
     add_filter('xmlrpc_methods', 'frame_init_remove_xmlrpc_pingback_ping');
 }
+
 
 
 //--------------------------------------------------------------------------------------------
@@ -647,12 +646,28 @@ add_action('tgmpa_register', 'frame_init_register_required_plugins');
 // add_action('after_switch_theme', 'test_plugins');
 
 
+
+//----------------------------------------------------------------------------------------
+// Autoload files
+//----------------------------------------------------------------------------------------
+
+$autoload = frame_config('autoload');
+if ($autoload)
+{
+    foreach($autoload as $key => $file)
+        if ( is_numeric($key) || (is_string($key) && frame_location($key)) )
+            locate_template($file, true);
+}
+
+
+
 //----------------------------------------------------------------------------------------
 // Files editor (Appearance > Editor)
 //----------------------------------------------------------------------------------------
 
 if (!defined('DISALLOW_FILE_EDIT') && frame_config('admin.files_editor') === false)
     define('DISALLOW_FILE_EDIT', true);
+
 
 
 //----------------------------------------------------------------------------------------
@@ -670,10 +685,11 @@ if (frame_config('admin.custom_post_fields_limit'))
 }
 
 
+
 //----------------------------------------------------------------------------------------
 // Post Revisions
 //----------------------------------------------------------------------------------------
 
-if (!defined('WP_POST_REVISIONS'))
+if (!defined('WP_POST_REVISIONS') && frame_config('admin.post_revisions'))
     define('WP_POST_REVISIONS', frame_config('admin.post_revisions'));
 

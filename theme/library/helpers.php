@@ -90,7 +90,7 @@ function frame_config($file = false, $refresh = false)
 
 
 /**
- * Access a multidimensional array with dot notation
+ * Access a multidimensional array via dot notation
  *
  * @param array $a The array to access
  * @param string $path The dot notation object
@@ -101,10 +101,11 @@ function frame_dot_array(array $a, $path, $default = null)
   $current = $a;
   $p = strtok($path, '.');
 
-  while ($p !== false) {
-    if (!isset($current[$p])) {
+  while ($p !== false)
+  {
+    if (!isset($current[$p]))
       return $default;
-    }
+
     $current = $current[$p];
     $p = strtok('.');
   }
@@ -156,6 +157,7 @@ function frame_load_files($folder, $include = false, $extension = true)
 }
 
 
+
 /**
  * Load a partial into a view
  *
@@ -164,9 +166,10 @@ function frame_load_files($folder, $include = false, $extension = true)
 
 function frame_partial($partial)
 {
-    $file = locate_template('partials/'.$partial.'.php');
-    if (is_readable($file)) include($file);
+    locate_template('partials/'.$partial.'.php', true);
 }
+
+
 
 /**
  * Get URI segments
@@ -920,8 +923,8 @@ function custom_menu_order($menu_ord) {
     return array(
         'index.php', // Dashboard
         'edit.php', // Blog (Posts)
-        'edit.php?post_type=event', // Temps d'Oci
-        'edit.php?post_type=classifieds', // Busca i Troba
+        'edit.php?post_type=event', // Events
+        'edit.php?post_type=classifieds', // Classifieds
         'edit.php?post_type=page', // Pages
         'upload.php', // Media
     );

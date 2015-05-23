@@ -1,12 +1,39 @@
 // Compile Sass files
 module.exports = {
-	dist: {
-        options: {
-            style: 'expanded',
-        },
-        files: {
-            '<%= config.root %><%= config.css %>main.css': '<%= config.root %><%= config.sass %>main.scss',
-            '<%= config.root %><%= config.css %>editor-style.css': '<%= config.root %><%= config.sass %>editor-style.scss'
-        }
+    dev: {
+      options: {
+        style: 'expanded',
+        sourcemap: 'auto',
+        trace: true
+      },
+      files: [{
+        expand: true,
+        cwd: '<%= config.root %><%= config.css %>source',
+        src: ['*.scss'],
+        dest: '<%= config.root %><%= config.css %>',
+        ext: '.css'
+      }]
+    },
+    build: {
+      options: {
+        style: 'expanded',
+        sourcemap: 'none',
+        trace: false
+      },
+      files: [{
+        expand: true,
+        cwd: '<%= config.root %><%= config.css %>source',
+        src: ['*.scss'],
+        dest: '<%= config.root %><%= config.css %>',
+        ext: '.css'
+      }]
     }
+	// dist: {
+ //        options: {
+ //            style: 'expanded',
+ //        },
+ //        files: {
+ //            '<%= config.root %><%= config.css %>main.css': '<%= config.root %><%= config.css %>source/*.scss'
+ //        }
+ //    }
 };

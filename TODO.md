@@ -1,6 +1,6 @@
 ##PRIO A
 
-- [ ] IMPORTANT: Include grunt-newer in the tasks
+- [x] IMPORTANT: Include grunt-newer in the tasks
 
 - [ ] Add 'environments' to the config files to load different files depending on the environment (especially useful for assets dev/live)
 
@@ -24,9 +24,11 @@
 
 - [ ] Add custom pointers (help tooltips) http://wpsnipp.com/index.php/functions-php/add-custom-pointers-in-themes-and-plugins/
 
-- [ ] Overwrite the ‘jquery’ js if $handle == jquery ... wp_deregister_script('jquery');
+- [ ] Allow to override the default ‘jquery’ js if $handle == jquery ... wp_deregister_script('jquery');
 
 - [ ] Add Travis CI support: https://github.com/xwp/wp-dev-lib
+
+- [ ] Add data import on theme activation or on demand (by using a php file, instead of the standard import process)
 
 
 ---

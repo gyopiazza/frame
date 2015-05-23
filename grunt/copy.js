@@ -1,10 +1,10 @@
 // Copy files to the 'build' folder
 module.exports = {
-    dist: {
+    build: {
         expand: true,
         nocase: true,
         cwd: '<%= config.root %>',
-        src: ['**', '!**/sass/**', '!**/source/**', '!**/autoload/**', '!**/_*.*', '!.ds_store', '!thumbs.db'],
+        src: ['**', '!**/_*.*', '!**/source/**', '!**/autoload/**', '!**/*.css.map', '!**/*.map', '!.ds_store', '!thumbs.db'],
         dest: '<%= config.build %><%= package.name %>'
     },
     dev: {

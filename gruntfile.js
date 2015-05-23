@@ -13,20 +13,23 @@ module.exports = function(grunt) {
         sass:   'assets/sass/',
         js:     'assets/js/',
         img:    'assets/img/',
+        tasks:  'grunt/',
         hooks:  'hooks/',
         tests:  'tests/',
         docs:   'docs/'
     };
 
 
-    //////////////////////////////////////////////////////////////
+   //////////////////////////////////////////////////////////////
 
+
+    // Autoload tasks from config.tasks
 
     var path = require('path');
 
     require('load-grunt-config')(grunt, {
         // path to task.js files, defaults to grunt dir
-        configPath: path.join(process.cwd(), 'grunt'),
+        configPath: path.join(process.cwd(), config.tasks),
 
         // auto grunt.initConfig
         init: true,
@@ -59,26 +62,22 @@ module.exports = function(grunt) {
 
 
     // Compile and watch
-    grunt.registerTask('default', ['sass', 'autoprefixer', 'cssmin', 'uglify', 'watch']);
+    grunt.registerTask('default', ['sass:dev', 'autoprefixer', 'combine_mq', 'cssmin', 'uglify:main', 'uglify:plugins', 'watch', 'notify:watch']);
 
-    // Compile only (useful when adding new js plugins)
-    grunt.registerTask('compile', ['sass', 'autoprefixer', 'cssmin', 'uglify']);
+    // Compile only
+    grunt.registerTask('compile', ['sass:dev', 'autoprefixer', 'combine_mq', 'cssmin', 'uglify:main', 'uglify:plugins', 'notify:watch']);
 
-    // Build and create a theme package ready for publishing
-    grunt.registerTask('build', ['sass', 'autoprefixer', 'cssmin', 'uglify', 'clean:build', 'copy:dist', 'imagemin', 'compress']);
+    // BrowserSync and Watch for live refresh
+    grunt.registerTask('live', ['browserSync', 'watch']);
 
-    // Build and create a theme package for development
-    grunt.registerTask('build-dev', ['sass', 'autoprefixer', 'cssmin', 'uglify', 'clean:build', 'copy:dev', 'imagemin', 'compress']);
+    // Build and create a project package ready for publishing
+    // Only compiled css/js files are included
+    // Any file or folder starting with an underscore '_' will not be included
+    grunt.registerTask('build', ['sass:build', 'autoprefixer', 'combine_mq', 'cssmin', 'uglify:main_build', 'uglify:plugins_build', 'clean:build', 'copy:build', 'imagemin', 'compress', 'notify:build']);
 
-    // Enable all the hooks
-    grunt.registerTask('enable_hooks', ['rename:enable_hooks']);
-
-    // Disable all the hooks
-    grunt.registerTask('disable_hooks', ['rename:disable_hooks']);
-
-    // Generate documentation from source
-    grunt.registerTask('docs', ['clean:docs', 'phpdocumentor']);
-
+    // Build and create a project package for development
+    // All the files are included
+    grunt.registerTask('build-dev', ['sass:dev', 'autoprefixer', 'combine_mq', 'cssmin', 'uglify:main', 'uglify:plugins', 'clean:build', 'copy:dev', 'imagemin', 'compress', 'notify:build']);
 
     // Run the tests
     // grunt.registerTask('test', ['dalek']);

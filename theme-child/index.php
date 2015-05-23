@@ -3,7 +3,7 @@
 <?php
 
 echo 'Child <br>';
-echo 'File (should be "index.php"): '.location('file');
+// echo 'File (should be "index.php"): '.location('file');
 echo '<br>';
 
 

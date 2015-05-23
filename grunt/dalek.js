@@ -1,4 +1,4 @@
-// Testing suite
+// Client side testing suite
 module.exports = {
     options: {
         // browser: ['phantomjs', 'chrome'],
@@ -14,10 +14,10 @@ module.exports = {
     },
 
     all: {
-      src: ['<%= config.tests %>**/*.js']
+      src: ['<%= config.tests %>client/**/*.js']
     },
 
     one: {
-      src: ['<%= config.tests %><%= test.file %>.js']
+      src: ['<%= config.tests %>client/<%= test.file %>.js']
     }
 };
