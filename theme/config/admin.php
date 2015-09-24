@@ -83,19 +83,43 @@ return array(
 
 
 	// ---------------------------------------------------------------
+    // Toolbar links
+    // ---------------------------------------------------------------
+    'toolbar_links' => array(
+        array(
+            'id'    => 'theme_customizer',
+            'title' => __('Customizer', 'theme'),
+            'href'  => admin_url('customize.php'),
+            // 'href'  => admin_url('customize.php?autofocus[control]=control-name'),
+            // 'meta'  => array('class' => 'my-toolbar-page'),
+        ),
+        // array(
+        //     'id'     => 'my_page2',
+        //     'title'  => 'My Page 2',
+        //     'href'   => 'http://mysite.com/my-page2/',
+        //     'meta'   => array('class' => 'my-toolbar-page2'),
+        //     'parent' => 'my_page',
+        // ),
+    ),
+
+
+    // ---------------------------------------------------------------
 	// Add fields to the user profile
 	// ---------------------------------------------------------------
 	// 'add_profile_fields' => true,
+
 
 	// ---------------------------------------------------------------
 	// Remove fields from the user profile
 	// ---------------------------------------------------------------
 	// 'remove_profile_fields' => true,
 
+
     // ---------------------------------------------------------------
     // Add custom mime types to be uploaded in the media library
     // 'file extension' => 'mime type'
     // 'ext1|ext2' => 'mime type'
+    // @link http://www.freeformatter.com/mime-types-list.html
     // ---------------------------------------------------------------
     // 'mime_types' => array(
     //     'applescript|scpt' => 'application/x-applescript',

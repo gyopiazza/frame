@@ -63,7 +63,7 @@ http://wpsnipp.com/index.php/functions-php/restricting-users-to-view-only-media-
 - [ ] Add theme automatic updates:
 http://code.tutsplus.com/tutorials/create-a-license-controlled-theme-and-plugin-update-system-part-1-the-license-manager-plugin--cms-22621
 
-- [ ] Put the SASS files into css/source (as for ‘js’)
+- [x] Put the SASS files into css/source (as for ‘js’)
 
 - [ ] Change admin.post_revision config to allow for an array of ['post_type' => X] values:
 http://codex.wordpress.org/Plugin_API/Filter_Reference/wp_revisions_to_keep
@@ -92,6 +92,7 @@ http://alisothegeek.com/2011/01/custom-maintenance-and-database-error-pages-in-w
 - [ ] Add custom admin color schemes
 https://www.domsammut.com/code/add-a-custom-admin-colour-scheme-in-wordpress
 
+- [ ] Add the ability to declare a function name for conditional loading assets, to allow for more advanced checks
 
 ---
 

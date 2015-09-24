@@ -22,7 +22,7 @@ define('FRAME_LOAD_INIT', true);
 
 
 
-// Check for the existence of Frame to prevent PHP errors
+// Check for the existence of the parent theme to prevent PHP errors
 // Not necessary but helpful to make sure that the parent theme exists
 $current_theme = wp_get_theme();
 if (!empty($current_theme->get('Template')))

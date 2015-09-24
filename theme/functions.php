@@ -17,7 +17,7 @@ if (!defined('FRAME_LOAD_ALIASES') || FRAME_LOAD_ALIASES !== false)
 
 // Load the plugins activation class
 if (!defined('FRAME_LOAD_PLUGINS_ACTIVATION') || FRAME_LOAD_PLUGINS_ACTIVATION !== false)
-    locate_template('library/activation.php', true, true);
+    locate_template('library/plugins-activation.php', true, true);
 
 // Load the theme activation file
 // if (!defined('FRAME_LOAD_THEME_ACTIVATION') || FRAME_LOAD_THEME_ACTIVATION !== false)
@@ -65,6 +65,32 @@ function frame_automatic_get_plugins()
 // !!!!????!!!!!
 // TODO: instead of changing input values, try appending hidden elements to the form...
 
+// Usage:
+//
+// Copy the 2 functions below into your theme.
+//
+// Add the 'auto_install' attribute when registering the plugins:
+//
+// array(
+//     'name'               => 'Some Plugin',
+//     'slug'               => 'someplugin',
+//     'silent_install'     => true,
+//     'auto_install'       => true, // Automatically install and activate the plugin
+// ),
+//
+// Then create a link for your users inside a notification or anywhere, pointing to:
+// wp-admin/themes.php?page=tgmpa-install-plugins&autoaction=install
+//
+// The JS code will simulate the user interacion and install/activate
+// the plugins with the 'auto_install' attribute previously set
+//
+// To help mitigate the redirects behavior, the g_automatic_plugins_loading()
+// hook will cover the screen with a white div.
+//
+// Ideally, the TGMPA page could be loaded in a iframe, giving the users
+// a better experience.
+
+
 function frame_automatic_plugins_activation()
 {
     // Stop execution if not in the tgmpa-install-plugins page
@@ -75,7 +101,13 @@ function frame_automatic_plugins_activation()
     // $plugins = (!empty($_GET['plugins'])) ? $_GET['plugins'] : false;
 
     // Solution 2: get the information from the config
-    $plugins = frame_automatic_get_plugins();
+    $plugins_config = TGM_Plugin_Activation::get_instance();
+    $plugins_config = !empty($plugins_config->plugins) ? $plugins_config->plugins : array();
+    $plugins = array();
+
+    foreach ($plugins_config as $slug => $plugin)
+        if (!empty($plugin['auto_install']))
+            $plugins[] = $slug;
 
     // Stop execution if no plugins have to be installed
     if (empty($plugins)) return;
@@ -89,6 +121,7 @@ function frame_automatic_plugins_activation()
             // Stop if there is an error message
             if (jQuery('#message.error').length > 0) { return; }
 
+            // The script proceeds only if the 'autoaction' is set
             var autoaction = <?php echo (!empty($_GET['autoaction'])) ? '"'.$_GET['autoaction'].'"' : 'false'; ?>;
             if (!autoaction) return;
 
@@ -136,7 +169,7 @@ function frame_automatic_plugins_activation()
     <?php
 }
 
-// add_action('in_admin_footer', 'frame_automatic_plugins_activation');
+add_action('in_admin_footer', 'frame_automatic_plugins_activation');
 
 
 
@@ -173,8 +206,7 @@ function frame_automatic_plugins_loading()
 <?php
 }
 
-
-// add_action('admin_head', 'frame_automatic_plugins_loading');
+add_action('admin_head', 'frame_automatic_plugins_loading');
 
 
 
@@ -218,6 +250,6 @@ function frame_autoinstall_plugins()
 }
 
 
-add_action('admin_init', 'frame_autoinstall_plugins');
+// add_action('admin_init', 'frame_autoinstall_plugins');
 
 

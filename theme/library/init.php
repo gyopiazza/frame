@@ -498,16 +498,20 @@ add_action('login_enqueue_scripts', 'frame_init_admin_login_logo');
 // Custom admin login title
 //--------------------------------------------------------------------------------------------
 
-if (frame_config('admin.login_logo_title')) {
-    function frame_init_login_logo_title() {
+if (frame_config('admin.login_logo_title'))
+{
+    function frame_init_login_logo_title()
+    {
         return frame_config('admin.login_logo_title');
     }
 
     add_filter('login_headertitle', 'frame_init_login_logo_title');
 }
 
-if (frame_config('admin.login_logo_url')) {
-    function frame_init_login_logo_url() {
+if (frame_config('admin.login_logo_url'))
+{
+    function frame_init_login_logo_url()
+    {
         return frame_config('admin.login_logo_url');
     }
 
@@ -669,7 +673,6 @@ if (!defined('DISALLOW_FILE_EDIT') && frame_config('admin.files_editor') === fal
     define('DISALLOW_FILE_EDIT', true);
 
 
-
 //----------------------------------------------------------------------------------------
 // Set the maximum amount of allowed custom fields
 //----------------------------------------------------------------------------------------
@@ -687,7 +690,26 @@ if (frame_config('admin.custom_post_fields_limit'))
 
 
 //----------------------------------------------------------------------------------------
-// Post Revisions
+// Admin toolbar links
+//----------------------------------------------------------------------------------------
+
+if (!empty(frame_config('admin.toolbar_links')))
+{
+    function frame_init_toolbar_links($wp_admin_bar)
+    {
+        $links = frame_config('admin.toolbar_links');
+
+        foreach ($links as $link)
+            $wp_admin_bar->add_node($link);
+    }
+
+    add_action('admin_bar_menu', 'frame_init_toolbar_links', 999);
+}
+
+
+
+//----------------------------------------------------------------------------------------
+// Post revisions
 //----------------------------------------------------------------------------------------
 
 if (!defined('WP_POST_REVISIONS') && frame_config('admin.post_revisions'))

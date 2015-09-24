@@ -8,10 +8,11 @@
  * Load config files to an array
  *
  * @param mixed $file The file name relative to the theme directory, false means all the files
+ * @param mixed $value Set a new value for the config item
  * @param bool $refresh If true, it reloads the config files
  */
 
-function frame_config($file = false, $refresh = false)
+function frame_config($file = false, $value = null, $refresh = false)
 {
     static $config = array();
 
@@ -37,6 +38,13 @@ function frame_config($file = false, $refresh = false)
     {
         $segments = explode('.', $file);
         $config_item = $segments[0];
+
+        // Set the new value
+        if ($value !== null)
+        {
+            $config[$config_item] = $value;
+            return $value;
+        }
 
         // echo '<br>-----------<br>';
         // echo 'file: ' . $file . '<br>';
@@ -279,10 +287,15 @@ function frame_location($params = null)
         // Set the arguments to the $params in order to continue as normal
         if (!empty($args)) $params = $args;
     }
-    // Allow for a single argument as a query string: arg1=something&arg2=somethingElse
+    // Allow for a single argument as a query string: arg1=something&arg2=somethingElse&multiArg=one|two|three
     else if ($num_args === 1 && is_string($params) && strpos($params, '=') !== false)
     {
         parse_str($params, $params);
+
+        // Checks and split multiple values
+        foreach ($params as &$param)
+            if (strpos($param, '|') !== false)
+                $param = explode('|', $param);
     }
 
 

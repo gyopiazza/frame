@@ -25,7 +25,7 @@ return array(
     // ---------------------------------------------------------------
     // Set the maximum allowed width for any content in the theme,
     // like oEmbeds and images added to posts.
-    // https://codex.wordpress.org/Content_Width
+    // @link https://codex.wordpress.org/Content_Width
     // ---------------------------------------------------------------
     'content_width' => 960,
 
@@ -71,7 +71,7 @@ return array(
     // CRON tasks
     // recurrence, hook, args...
     // ---------------------------------------------------------------
-    'cron' => array(
-        array('task-name', 'some_function_name'),
-    ),
+    // 'cron' => array(
+    //     array('task-name', 'some_function_name'),
+    // ),
 );
