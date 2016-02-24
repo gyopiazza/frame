@@ -30,6 +30,8 @@
 
 - [ ] Add data import on theme activation or on demand (by using a php file, instead of the standard import process)
 
+- [ ] Add Custom Post Type example for easy creation
+
 
 ---
 
