@@ -688,7 +688,7 @@ function frame_count_posts_by_author($user_id, $post_type = array('post', 'page'
 
 
 /**
- * Output inline styles in the pages
+ * Output CSS styles
  *
  * @param array The style to add
  * @return void
