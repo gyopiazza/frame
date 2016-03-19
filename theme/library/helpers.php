@@ -170,11 +170,17 @@ function frame_load_files($folder, $include = false, $extension = true)
  * Load a partial into a view
  *
  * @param string $partial The file name without extension, relative to the 'partials' directory
+ * @param array  $params Key/Value that will be extracted to use as variables in the partial
  */
 
-function frame_partial($partial)
+function frame_partial($partial, $params = array())
 {
-    locate_template('partials/'.$partial.'.php', true, false);
+    $partial = locate_template('partials/'.$partial.'.php', false, false);
+
+    if (!empty($partial)) {
+        extract($params);
+        include($partial);
+    }
 }
 
 

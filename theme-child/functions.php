@@ -1,6 +1,6 @@
 <?php
 
-// Control what gets loaded from the Frame parent theme
+// Control what gets loaded from the Frame parent theme to override parts
 
 // Load the debug functions file
 define('FRAME_LOAD_DEBUG', true);

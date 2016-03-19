@@ -34,9 +34,9 @@ return array(
 
 
 	// ---------------------------------------------------------------
-    // Enable/Disable the default admin login CSS (in wp-login.php)
+    // Load the default admin login CSS (in wp-login.php)
     // ---------------------------------------------------------------
-    'default_login_css' => false,
+    'default_login_css' => true,
 
 
     // ---------------------------------------------------------------
