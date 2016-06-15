@@ -12,18 +12,18 @@
 return array(
 
     // This is an example of how to include a plugin pre-packaged with a theme.
-    array(
-        'name'               => 'Test', // The plugin name.
-        'slug'               => 'test', // The plugin slug (typically the folder name).
-        'source'             => get_template_directory() . '/plugins/test.zip', // The plugin source.
-        'silent_install'     => true,
-        'required'           => true, // If false, the plugin is only 'recommended' instead of required.
-        'version'            => '', // E.g. 1.0.0. If set, the active plugin must be this version or higher.
-        'force_activation'   => false, // If true, plugin is activated upon theme activation and cannot be deactivated until theme switch.
-        'force_deactivation' => false, // If true, plugin is deactivated upon theme switch, useful for theme-specific plugins.
-        'external_url'       => '', // If set, overrides default API URL and points to an external URL.
-        'auto_install'       => true, // Automatically install and activate the plugin
-    ),
+    // array(
+    //     'name'               => 'Test', // The plugin name.
+    //     'slug'               => 'test', // The plugin slug (typically the folder name).
+    //     'source'             => get_template_directory() . '/plugins/test.zip', // The plugin source.
+    //     'silent_install'     => true,
+    //     'required'           => true, // If false, the plugin is only 'recommended' instead of required.
+    //     'version'            => '', // E.g. 1.0.0. If set, the active plugin must be this version or higher.
+    //     'force_activation'   => false, // If true, plugin is activated upon theme activation and cannot be deactivated until theme switch.
+    //     'force_deactivation' => false, // If true, plugin is deactivated upon theme switch, useful for theme-specific plugins.
+    //     'external_url'       => '', // If set, overrides default API URL and points to an external URL.
+    //     'auto_install'       => true, // Automatically install and activate the plugin
+    // ),
 
     // This is an example of how to include a plugin pre-packaged with a theme.
     // array(
@@ -54,12 +54,12 @@ return array(
     //     'force_activation' => true,
     // ),
 
-    array(
-        'name'             => 'Theme Check',
-        'slug'             => 'theme-check',
-        'required'         => false,
-        'force_activation' => false,
-    ),
+    // array(
+    //     'name'             => 'Theme Check',
+    //     'slug'             => 'theme-check',
+    //     'required'         => false,
+    //     'force_activation' => false,
+    // ),
 
     // array(
     //     'name'             => 'Themeforest Check',

@@ -97,6 +97,7 @@ function frame_config($file = false, $value = null, $refresh = false)
 }
 
 
+
 /**
  * Access a multidimensional array via dot notation
  *
@@ -120,6 +121,7 @@ function frame_dot_array(array $a, $path, $default = null)
 
   return $current;
 }
+
 
 
 /**
@@ -188,11 +190,11 @@ function frame_partial($partial, $params = array())
 /**
  * Get URI segments
  *
- * @param int $index The segment index to retrieve, if null returns all the segments
+ * @param int $index The segment index to retrieve (base 1), if null returns all the segments
  */
 
 /*
- * segments ( [ int $index = NULL ] ) -> string
+ * segments ( [ int $index = null ] ) -> string
  */
 
 // URI: /this/is//a/path/to///nothing
