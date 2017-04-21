@@ -18,7 +18,7 @@ class Frame_Example_Widget extends WP_Widget
     public function __construct()
     {
         $widget_ops = array('classname' => 'Frame_Example_Widget', 'description' => 'Just an example...');
-        $this->WP_Widget('Frame_Example_Widget', 'Example widget', $widget_ops);
+        parent::__construct('Frame_Example_Widget', 'Example widget', $widget_ops);
     }
 
     function widget($args, $instance)

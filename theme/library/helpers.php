@@ -261,7 +261,7 @@ function frame_segments($index = null)
  * Get/Check the current location
  *
  * @param array $params The parameters to check against the current location
- * @todo Add single, archive,
+ * @todo Add single, archive | Add caching mechanism
  */
 
 function frame_location($params = null)
@@ -339,21 +339,27 @@ function frame_location($params = null)
     // Get post type from post object
     if ($post && $post->post_type)
         $post_type = $post->post_type;
+
     // Check $typenow object
     else if ($typenow)
         $post_type = $typenow;
+
     // Check $current_screen object
     else if ($current_screen && $current_screen->post_type)
         $post_type = $current_screen->post_type;
+
     // Pages and custom post types
     else if (isset($_REQUEST['post_type']) && $admin)
         $post_type = sanitize_key($_REQUEST['post_type']);
+
     // Standard posts
     else if ($file == 'edit.php' && !isset($_REQUEST['post_type']) && $admin)
         $post_type = 'post';
+
     // Attachments
     else if ($file == 'upload.php' && !isset($_REQUEST['post_type']) && $admin)
         $post_type = 'attachment';
+
     // When inside edit screens, get the post type from the post ID
     else if ($file == 'post.php' && isset($_REQUEST['post']) && !isset($_REQUEST['post_type']) && $admin)
         $post_type = get_post_type(sanitize_key($_REQUEST['post']));
@@ -623,6 +629,28 @@ function frame_url()
     }
 
     return $url;
+}
+
+
+
+/**
+ * Return the current language
+ *
+ * @return string The current language ISO code (en, it, es...)
+ */
+function frame_language()
+{
+    // Polylang
+    if (function_exists('pll_current_language'))
+        return pll_current_language('slug');
+
+    // WPML
+    if (defined('ICL_LANGUAGE_CODE'))
+        return ICL_LANGUAGE_CODE;
+
+    // WordPress default
+    $lang = explode('-', get_bloginfo('language'));
+    return (isset($lang[0])) ? $lang[0] : 'en';
 }
 
 
